@@ -14,6 +14,8 @@ While we did not learn about the V1 contracts specifically, a lot of the code is
 
 Since it is mainnet, we will not be implementing Purchase functionalities as we do not deal with mainnet tokens - however given all the complexity and coding we did in the FNS levels, and also considering that the Storefront and all transactions/scripts used for it are open-source - that should be possible for most of you to do by yourself at this point if you choose to, and if you did the earlier lessons diligently.
 
+<Quiz questionId="53fa9270-de22-4f9a-8eba-907376a2b2b4" />
+
 ## 👨‍🔬 Setting Up
 
 Open up your terminal, and enter a directory where you want to create the Next.js app we will be building. Then type the following:
@@ -56,6 +58,8 @@ config({
 ```
 
 Super simple configuration. The `accessNode.api` points to the RPC URL for the Flow mainnet, and the `eventPollRate` set to 2000 (milliseconds) means that FCL will check for new events once every two seconds.
+
+<Quiz questionId="763c402a-d85e-4b20-be94-73c7441da03e" />
 
 ### 🏠 Building the Homepage
 
@@ -152,3 +156,5 @@ You can use this knowledge to also build a real-time events displayer for the FN
 Congratulations, you've completed the last programming level for the Flow Track! Head over to the last lesson after this to learn a bit more about the Flow ecosystem, and what projects are building on Flow, and then graduate!!!
 
 Cheers 🥂
+
+<SubmitQuiz />

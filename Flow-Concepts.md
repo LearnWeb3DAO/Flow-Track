@@ -12,6 +12,7 @@ Once you decide to finalize the contract, you can choose take it out of beta pha
 
 ![](https://i.imgur.com/2Xim6eR.png)
 
+<Quiz questionId="4e4d5ec9-49a8-4c94-85f7-51edddfe1edc" />
 
 ## Accounts
 An account on Flow contains various things:
@@ -30,7 +31,11 @@ The result of this is that you are also allowed to have multiple accounts share 
 
 To create an account on Flow, users are actually required to submit an on-chain account creation transaction. However, since they don't already have their own account, they must get somebody else to pay for the gas fees and propose the transaction. Typically, Flow wallets cover the gas fees for creating a new account through them.
 
-This is another cool feature of Flow, where transactions can be made by someone and paid for by someone else entirely. This is also natively built into the network.
+Interestingly, transactions can be made by someone and paid for by someone else entirely. This is also natively built into the network.
+
+<Quiz questionId="fbd647c0-7233-42e6-90fc-cc3b5a79f935" />
+
+<Quiz questionId="020a6a34-6a51-4dec-948f-44c1bd9f37b3" />
 
 ## Keys
 
@@ -45,6 +50,8 @@ Key B = Weight 500
 Key C = Weight 500
 
 Then as long as two of these keys sign the transaction, the overall weight becomes 1000, and the transaction can be authorized and broadcasted.
+
+<Quiz questionId="160238e4-733a-4f7f-ac2f-7e7c086f20a0" />
 
 ## Signing Transactions
 
@@ -65,12 +72,17 @@ For most use cases, these three values refer to the same account. However, for t
 
 ![](https://i.imgur.com/BeW04Gl.png)
 
+<Quiz questionId="f8dfcb7a-0dd4-4371-bb5f-66aaae1ec7f2" />
 
 ## Storing Data on Flow
 
 *Each* flow account has some amount of network storage that it's allowed to use. How much storage you get is dictated by how much FLOW tokens you have in your account. The minimum any flow account can have is 0.001.
 
 The *exact* amount of storage you have is your FLOW tokens multiplied by the **storageBytesPerReservedFlow** variable defined on the StorageFees smart contract, which is roughly 100 MB per flow token.
+
+<Quiz questionId="a93f14f0-8519-400d-9d17-281bb2f6817f" />
+
+<Quiz questionId="b2204f0d-d5dd-4e6e-bf88-b9404941de8a" />
 
 ## Segmented Transaction Fees
 
@@ -89,3 +101,6 @@ The Inclusion Fees depends on the effort required to include a transaction in a 
 
 The Network Surge Fees currently does not apply, and is fixed. In the future, however, this has been reserved as a way to charge higher fees during massive network usage to stabilize demand and supply.
 
+<Quiz questionId="5e8f0766-00b9-466d-8925-ee241663d3ee" />
+
+<SubmitQuiz />

@@ -16,6 +16,8 @@ The main thing to remember in Flow is that both Transactions and Scripts are wri
 
 We will clear this up with examples as we proceed.
 
+<Quiz questionId="79fbb5ab-7f0e-48cf-8904-df008fc1920e" />
+
 ## 🛝 Flow Playground
 
 To start testing, Flow offers an online playground where you can test your code. This works somewhat similar to Remix with a Javascript VM on EVM chains.
@@ -31,6 +33,8 @@ In the left, you can see 5 accounts (0x01 to 0x05). These are obviously fake acc
 Right below that, we also have the option of creating new Transactions and new Scripts i.e. writing Cadence code for them. We will come back to this.
 
 And right in the middle we see we get an option to customize our project details. We'll skip this for now.
+
+<Quiz questionId="5e1ec2d2-30de-4c4e-82ba-73584d47b8d0" />
 
 ## 👨‍💻 Cadence Code
 
@@ -73,6 +77,8 @@ access(all) contract HelloWorld {
 
 the `pub contract ContractName` will always be necessary no matter what smart contract you're writing.
 
+<Quiz questionId="f0c37a92-c310-4118-b730-62e6072c3906" />
+
 ### The Variable Declarations
 
 ```javascript
@@ -99,6 +105,8 @@ In this case, we are setting the initial value of the `greeting` variable.
 
 This is similar to a constructor, as it is only run once when the contract is initially deployed.
 
+<Quiz questionId="b83635fe-32df-4313-91c8-696c12f8043a" />
+
 ### The Functions
 
 ```javascript
@@ -110,11 +118,15 @@ access(all) fun hello(): String {
 
 This is a super simple function, a public function named `hello` that returns a String. It just returns `self.greeting`, which is our `greeting` variable we declared above. If we call this function, we will get `"Hello, World!"` since we did not change the variable's value.
 
+<Quiz questionId="4b26da20-426c-43c1-834c-0a8d90700ee6" />
+
 ## 🚀 Deploying
 
 To deploy our smart contracts in the Flow playground, just click the shiny green `Deploy` button in the top right.
 
 Once the contract is deployed, you will see some logs in the console at the bottom of the page, and also notice that the account `0x01` now has a name attached to it - this is the name of the contract. In our case, it should be `HelloWorld`.
+
+<Quiz questionId="8f859861-da6c-4de9-a219-dd15a1f7693c" />
 
 ## ✍️ Scripting
 
@@ -153,6 +165,8 @@ pub fun main(): String {
     return HelloWorld.greeting
 }
 ```
+
+<Quiz questionId="d4d4c599-87f6-4579-be7f-e407d092f18b" />
 
 ### Executing our Script
 
@@ -211,6 +225,8 @@ Let's update the declaration of our greeting variable to be as follows:
 - access(all) let greeting: String
 + pub var greeting: String
 ```
+
+<Quiz questionId="4799a6f4-c707-4bdd-9c42-ed11e2409a30" />
 
 We also changed `access(all)` to `pub` while we were at it, but that has nothing to do with `let` or `var`.
 
@@ -304,3 +320,5 @@ In future lessons, as we keep building, we will learn about more advanced data t
 We will also learn about resources, the most important feature of Cadence, and how resources can be stored within account storage.
 
 Until then, have a great day, hope you're enjoying it so far! ❤️
+
+<SubmitQuiz />

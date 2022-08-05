@@ -17,6 +17,8 @@ OpenSea specifically also does a lot of custom off-chain things, so even if you 
 
 Recently, however, OpenSea did release SeaPort - a new set of smart contracts which removes the need for their custom off-chain code, and they hope the SeaPort contracts will help standardize NFT Marketplaces on Ethereum and converge on using a shared set of contracts across various marketplaces. Right now, however, this is not something that is being used in production at the time of writing, and we have yet to see how the adoption looks like for that standard.
 
+<Quiz questionId="6e3efe15-5c69-4fb5-b4b0-439449edfc46" />
+
 ## ⁉️ NFT Storefront
 
 The Flow team realised this was going to a problem a long time ago, and created a general purpose `NFTStorefront` contract that offers a shared Cadence smart contract interface that various marketplace products can all use and end up with a unified view of listings, activity, trading, etc. across all of them.
@@ -30,6 +32,8 @@ All the code for the NFT Storefront Cadence contracts can be found on Github - [
 We'll only be focusing on `NFTStorefrontV2` for obvious reasons, and not dig into `NFTStorefront` (Version 1).
 
 Hopefully through this lesson you also get some idea on how I like to approach and understand new codebases, even though this isn't a particularly large contract, and how the thinking process looks like - maybe it will help you!
+
+<Quiz questionId="e0799363-3856-4fa2-a68a-d82702b6d77f" />
 
 ## ⛏️ Let's Dig!
 
@@ -60,6 +64,8 @@ Starting top down, let's make a list of the different structs, resources we woul
 8. Global Functions
 
 I'll skip `SaleCut` for now - as it looks like something that would be a part of a Listing. The name suggests it's some sort of Royalty-related thing, taking a cut from the listing sale price. We'll come back to this.
+
+<Quiz questionId="f75ab458-3956-4d56-b46b-20293683e4dc" />
 
 ### ListingDetails
 
@@ -107,6 +113,8 @@ Similarly, in FNS we had `FlowToken.Vault` (which implements `FungibleToken.Vaul
 These can be used by the user to specify different currencies for each Listing they want to sell the NFT for, and specify the exact data type of each NFT for sale as well, while keeping the Storefront contract as generic as possible.
 
 > P.S. If you've worked with static typed languages before that supported Generics (Java, Typescript, Kotlin, etc) - you can think of the `Type` data type as a generic type which can accept any other data type as it's own value.
+
+<Quiz questionId="2632dd72-c7ce-4bc2-b7a6-6155044b4ff6" />
 
 ---
 
@@ -194,6 +202,8 @@ Great, now that we have an educated guess around what `SaleCut` might be referri
 ```
 
 Pretty standard stuff. I think our understanding is correct. Multiple people can receive different amounts from the sale of the NFT. A `SaleCut` struct just stores the amount that specific person will receive, along with a Capability to `FungibleToken.Receiver` so we can deposit tokens into their vault.
+
+<Quiz questionId="2b04880c-f1e0-4343-b1e2-ed504b601d35" />
 
 ### ListingPublic
 
@@ -418,6 +428,8 @@ Which calls the `addDuplicateListing` function which automatically adds the list
 
 Everything else is mostly straightforward within the `Storefront` resource. I highly suggest you go through it yourself, and if you have any doubts, ask them on the Discord server, and I'd be happy to help you!
 
+<Quiz questionId="ed19b479-53af-4e4d-8b56-a9bd1082696c" />
+
 ### Global Things
 Last but not least, there is a global function and the contract initializer we need to look at.
 
@@ -439,6 +451,8 @@ init () {
 ```
 
 The initializer is quite simple. It just specifies the Storage and Public path for the Storefront contract. Note, we did not specify a private path here. That is because there is no need to give access to the private portion of the resource to anyone except for the owner of the `Storefront` themself, and they can just get it from the Storage path directly.
+
+<Quiz questionId="077afe74-1a1d-411f-95b1-56290792d205" />
 
 ## 🐗 Examples in the Wild
 
@@ -466,6 +480,8 @@ whereas, [Version 2 NFTStorefront Flowscan](https://flowscan.org/contract/A.4eb8
 
 Things do look better on testnet though, where `NFTStorefrontV2` is gaining new test transactions every day, and it's clear that some projects are working on a transition to the V2 contract.
 
+<Quiz questionId="3a7ccdda-a763-454c-9616-8c35fdccf78c" />
+
 ## 🎁 Wrapping Up
 
 Hopefully this level presented some challenges to you. I intentionally left out explaining some of the relatively easier parts of the `NFTStorefrontV2` smart contract and highly suggest you take the time to understand it yourself. Happy to help you if you get stuck somewhere or have a question (or ten).
@@ -474,4 +490,6 @@ Regardless, it's pretty cool to me that marketplaces on Flow can all use the sam
 
 Since we don't have something like The Graph on Flow (maybe one of you wants to build it), such indexing of these events has to be done ourselves. Thankfully, the Flow Client Library (FCL) has functions which can help us return a list of events of a specific type within a 250 block range, but that still means to index *every* event from the beginning of the blockchain, we have to write code to fetch those events in 250 block chunks, and save them in a local database somewhere, so our marketplace can display *all* listings that are active - not just the ones which were created/updated within the last 250 blocks.
 
-You can find an example of such an indexer open sourced by the [Rarible](https://rarible.org) team here - [rarible/flow-nft-indexer](https://github.com/rarible/flow-nft-indexer). While it's not an indexer for the Storefront, it is an indexer for NFTs generally to track all NFTs that exist on Flow. It's written in Kotlin, and uses MongoDB as a backend to save data to. 
+You can find an example of such an indexer open sourced by the [Rarible](https://rarible.org) team here - [rarible/flow-nft-indexer](https://github.com/rarible/flow-nft-indexer). While it's not an indexer for the Storefront, it is an indexer for NFTs generally to track all NFTs that exist on Flow. It's written in Kotlin, and uses MongoDB as a backend to save data to.
+
+<SubmitQuiz />

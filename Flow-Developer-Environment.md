@@ -23,6 +23,8 @@ Then, select Testnet for the network.
 
 ![](https://i.imgur.com/L8vcVJw.png)
 
+<Quiz questionId="0dcf8fe2-09c6-4cf0-a233-85f0198cd796" />
+
 ## 💰 Getting Testnet Tokens
 
 Once your wallet is all set up, we need to get some testnet FLOW tokens.
@@ -31,6 +33,8 @@ Once your wallet is all set up, we need to get some testnet FLOW tokens.
 2. Copy your wallet address from Lilico and paste it in the address input box
 3. Click on `Request Funds` and wait to receive the Testnet Tokens
 
+<Quiz questionId="e3c5ef38-0e6a-4b64-990b-42a1611b84a5" />
+
 ## 🖥️ The Flow CLI
 
 The Flow CLI is a command-line interface that provides useful utilities for building Flow applications. Think of it like Hardhat, but for Flow.
@@ -38,3 +42,7 @@ The Flow CLI is a command-line interface that provides useful utilities for buil
 Install the Flow CLI on your computer. Installation instructions vary based on operating system, so [follow the installation steps here](https://docs.onflow.org/flow-cli/install/) to get the up-to-date instructions.
 
 We will use the CLI to create dApps moving forward for Flow.
+
+<Quiz questionId="9fa35743-f4cb-468f-a9f6-0fecd06124f9" />
+
+<SubmitQuiz />

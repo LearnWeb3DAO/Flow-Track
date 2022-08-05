@@ -92,3 +92,7 @@ Head over to the [onflow/developer-grants](https://github.com/onflow/developer-g
 We wish you all the best, and as always, feel free to ask for any help in the Discord server!
 
 Cheers 🥂
+
+<Quiz questionId="d1eb4867-ad96-4557-907a-dfdf11420b59" />
+
+<SubmitQuiz />

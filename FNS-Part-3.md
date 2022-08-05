@@ -139,6 +139,8 @@ config({
 
 **MAKE SURE** you update the contract alias for `0xDomains` otherwise your website will not work. We will see how this alias works in a bit.
 
+<Quiz questionId="d943aaa7-0d07-42e8-921c-6770029cca3d" />
+
 ## 🎬 Account Initialization
 If you remember from Part 1, I mentioned that the `createEmptyCollection` global function on our smart contract will be used to initialize user accounts who wish to purchase FNS domains.
 
@@ -195,6 +197,12 @@ In this case, we are giving the string `addr` and telling FCL to encode it as th
 
 All of this will become second-nature as we write more and more scripts and transactions for our app.
 
+<Quiz questionId="9f9e8ffe-b4a7-4293-9bb2-d2eb571e9e2f" />
+
+<Quiz questionId="3b8d4477-6201-44bd-a34c-b0fbf383fb4c" />
+
+<Quiz questionId="ee6fc2e6-3b00-477c-a3f8-e48349574459" />
+
 ---
 
 Now, create a file called `transactions.js` under `web/flow` directory. Here we will write the transaction for initializing an account.
@@ -244,6 +252,8 @@ limit: 50,
 These are Flow-specific things that define which account will be paying for the transaction (payer), broadcasting the transaction (proposer), and which accounts we need authorizations from (in case an account has mutliple keys attached, it can behave like a multisig wallet). In our case, things are simpler, and all of them are the same. `fcl.authz` refers to the currently connected account. In all the future transactions we write, all these properties will remain the same.
 
 `limit` is like `gasLimit` in the Ethereum world, which places an upper-limit on how much computation we want to let this function call do at most, and if the computation crosses the limit then the transaction will fail.
+
+<Quiz questionId="d198a9bd-89f4-49fd-a9a0-ad065abc3128" />
 
 ## 🔐 Creating the AuthContext
 
@@ -338,6 +348,8 @@ export default function AuthProvider({ children }) {
 ```
 
 Hopefully the comments in the code are sufficient to explain what is going on. Feel free to message on Discord and I'll help you out if you have any doubts! However, if those doubts are primarily related to how React Contexts work, I highly suggest again you go look at the video I linked above first!
+
+<Quiz questionId="a8f16337-b84e-4f89-adfe-744bb7c591fb" />
 
 ## 💉 Injecting the AuthContext
 
@@ -675,6 +687,8 @@ So we borrow a `FungibleToken.Vault` from `/storage/flowTokenVault` which is the
 
 Then, we call `Domains.registerDomain` and pass the `name`, `duration`, as well as the `vault` which contains the payment, and the `receiver` which is the `NonFungibleToken.Receiver` capability to the contract and let it do its magic.
 
+<Quiz questionId="f725310a-c854-443b-9b3c-e937bb708218" />
+
 ---
 
 Coming back to the website now, open up `pages/purchase.js`. Read the code comments to understand what is happening.
@@ -800,6 +814,8 @@ export default function Purchase() {
 }
 
 ```
+
+<Quiz questionId="55a34d46-5e92-4369-b922-4ee3ab24a67b" />
 
 Awesome! Create a CSS file named `Purchase.module.css` under `pages/styles` and copy over the following code there:
 
@@ -1459,3 +1475,5 @@ Make sure to post a screenshot in the Discord `#showcase` channel of your app up
 🚀🚀🚀🚀🚀
 
 Cheers 🥂
+
+<SubmitQuiz />

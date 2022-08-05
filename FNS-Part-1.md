@@ -144,6 +144,8 @@ Therefore, the Public portion of the Collection implements functions that let th
 
 Similarly, the Private portion of the Collection implements functions that let the owner have access to Private portions of the NFTs contained within the collection.
 
+<Quiz questionId="aa0346c7-0370-41a6-aa51-9e989dc15dc4" />
+
 ### The Registrar
 Going a similar path as the above two, the Registrar also has a Public portion and a Private portion. However, the Registar will be a special resource that is only ever stored within the owner's account storage, and never within a third-party's storage.
 
@@ -155,6 +157,8 @@ The Public portion exposes functions such as `registerDomain` and `renewDomain` 
 These are functions and variables that are defined on the global level for the smart contract, i.e. are not part of any resource. These are what will be accessible and called by the public, and expose the core functionalities of the smart contract to the public.
 
 ---
+
+<Quiz questionId="d77b0757-7605-4f5a-bf24-2398731a50c4" />
 
 I'm sure all of this seems a little overwhelming to look at right away. Spend some time to try to just build a mental diagram of everything I described above, and black box specific things you don't understand right now as you will understand them as we write code. But, also, if you have any questions, message on the Discord!
 
@@ -176,6 +180,10 @@ pub contract Domains: NonFungibleToken {
 ```
 
 In the above code, we just defined our contract. The `: NonFungibleToken` syntax means that the `Domains` contract will be implementing the `NonFungibleToken` standard interface. The rest of our code will be going inside our contract block.
+
+<Quiz questionId="34aee0b2-cea1-487e-9f79-8aea552d398d" />
+
+<Quiz questionId="fa4d8bcd-8af5-4213-9935-7fc9af241249" />
 
 ---
 
@@ -233,6 +241,8 @@ This is a good opportunity to explain some of the variables we will be using, an
 - `bio`: A short bio written by the owner for this FNS domain
 - `createdAt`: The timestamp at which this domain was registered. Represented in seconds.
 
+<Quiz questionId="bf047421-127f-48a3-bd84-b34a65190828" />
+
 ### The NFT Resource
 
 #### The Resource Interfaces
@@ -270,6 +280,8 @@ pub resource interface DomainPrivate {
 ```
 
 Again, quite self explanatory. Obviously we don't want any third-party to have access to functions which allow you to change the `bio` or the `address`, so we will restrict them to be owner-only by storing these in the owner's private account storage.
+
+<Quiz questionId="fa26b536-dc6a-4e6d-983b-d1765e0e0476" />
 
 #### The Resource Itself
 
@@ -769,6 +781,10 @@ A capability basically gives some third-party the capability (permission) to acc
 
 We will use this a lot as we build our frontend, to gain access to the public portions of the `Collection` and `NFT` resources from users so we can load and display public information about those resources on our website. The syntax for how to do this will be covered later.
 
+<Quiz questionId="eff37132-54b9-4595-a475-5f6f8cc1a95b" />
+
+<Quiz questionId="6e7803f1-1006-4203-b6a1-fb0a08aa55ac" />
+
 ---
 
 #### Back on track
@@ -810,6 +826,10 @@ destroy() {
 ```
 
 This will destroy all the NFT resources contained within the collection as well, if the `Collection` is destroyed by someone - perhaps the collection owner.
+
+<Quiz questionId="4e629dd4-28c9-476e-89cf-7b1fc4ba22d7" />
+
+<Quiz questionId="fd6d05f7-55af-4a07-af52-906077e85d78" />
 
 ---
 
@@ -979,6 +999,8 @@ In context of the Registrar, we will create an empty `Vault` for the `FlowToken`
 We can then withdraw the `Vault` using the `withdrawVault` function, and move tokens out of the `Registrar`'s vault, into a separate Vault, perhaps on a different address.
 
 We can also update the `Vault` being used, by having it refer directly to a `Vault` created on a different address perhaps, just by providing a Capability for `FungibleToken.Receiver` - similar to how we asked the user for a Capability for `NonFungibleToken.Receiver` to mint a domain to their account. The `FungibleToken.Receiver` capability allows us to deposit tokens to someone's Vault. Therefore, instead of the `Registrar` using the empty vault that will be initially set up, we can have it accept payment directly to a `Vault` on a different address.
+
+<Quiz questionId="2067b367-a04b-413a-8372-7ec093a3e433" />
 
 ---
 
@@ -1258,6 +1280,8 @@ pub fun getRentCost(name: String, duration: UFix64): UFix64 {
     return rentCost
 }
 ```
+
+<Quiz questionId="5eb3cbd1-2a78-46db-9462-d10b5fcc3acc" />
 
 #### Initializer
 
@@ -1916,3 +1940,5 @@ pub contract Domains: NonFungibleToken {
 Thank you for sticking with me throughout this long tutorial, have an amazing day, and I'll see you in the next one!
 
 Cheers 🥂
+
+<SubmitQuiz />
