@@ -1,0 +1,31 @@
+.container {
+  background-color: #171923;
+  min-height: 100vh;
+}
+
+.main {
+  color: white;
+  padding: 0 4em;
+  display: flex;
+  gap: 2em;
+  flex-direction: column;
+  width: 30%;
+  margin: auto;
+  align-items: center;
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+}
+
+.inputGroup input {
+  padding: 0.2em;
+  border-radius: 0.5em;
+  border-width: 0;
+}
+
+.main button {
+  width: fit-content;
+}

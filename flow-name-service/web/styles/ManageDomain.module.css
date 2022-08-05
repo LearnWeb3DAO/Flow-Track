@@ -1,0 +1,29 @@
+.container {
+  background-color: #171923;
+  min-height: 100vh;
+}
+
+.main {
+  color: white;
+  padding: 0 4em;
+  display: flex;
+  justify-content: center;
+  gap: 12em;
+}
+
+.inputGroup {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 0.5em;
+  justify-content: center;
+}
+
+.inputGroup input {
+  padding: 0.2em;
+  border-radius: 0.5em;
+  border-width: 0;
+}
+
+.main button {
+  width: fit-content;
+}

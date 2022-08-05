@@ -1,0 +1,23 @@
+.container {
+  background-color: #171923;
+  min-height: 100vh;
+}
+
+.main {
+  color: white;
+  padding: 0 4em;
+}
+
+.domainsContainer {
+  display: flex;
+  gap: 4em;
+  flex-wrap: wrap;
+}
+
+.domainInfo {
+  padding: 2em;
+  color: antiquewhite;
+  background-color: darkslategray;
+  border-radius: 2em;
+  max-width: 65ch;
+}
