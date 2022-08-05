@@ -1,0 +1,13 @@
+.main {
+  padding: 0 4em;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.info {
+  background-color: #171923;
+  padding: 1em;
+  border-radius: 2em;
+  width: fit-content;
+  margin: 1em 0;
+}
