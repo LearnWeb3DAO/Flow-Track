@@ -364,4 +364,6 @@ Alright, this was hopefully short and sweet. Hopefully you didn't face any error
 
 I'll see you in the next lesson!
 
+To verify this level, please enter the contract account address of the `Domains` contract you have just deployed. Select `Flow Testnet` as the network.
+
 Cheers 🥂

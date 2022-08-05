@@ -265,3 +265,7 @@ Congratulations, you've built a tasks tracker where each user can maintain their
 The Solidity-equivalent for this would probably have to be a mapping from addresses to an array of strings, where all the logic around who can add/remove tasks to a certain key-value pair of the mapping would need to be in the smart contract. With resources in Cadence, it feels quicker and faster to write such code once you understand the mental model around it.
 
 Today, we learnt about Resources, Arrays, Account Storage, and various ways of reading/writing data to storage. As we proceed, we will use all of these concepts to build our own ENS-like name service on Flow!
+
+---
+
+To verify this level, please copy your Flow Playground link with the Project ID included and enter it into the box below. Select `Flow Playground` as the network.
