@@ -17,11 +17,11 @@ Once you decide to finalize the contract, you can choose take it out of beta pha
 ## Accounts
 An account on Flow contains various things:
 
-* **Address**,
+* **Address**
 * **Token Balance**
 * **Public Keys**
 * **Code**
-* **Storage**.
+* **Storage**
 
 This is a cool feature because, unlike Ethereum, you are allowed to have one central place to store all of your data.
 
@@ -46,7 +46,9 @@ Each key has a certain **weight** - which is an integer between 1 and 1000. A tr
 Therefore, if you wanted to create, let's say, a 2/3 multisig wallet, you can attach 3 keys to the account such that:
 
 Key A = Weight 500
+
 Key B = Weight 500
+
 Key C = Weight 500
 
 Then as long as two of these keys sign the transaction, the overall weight becomes 1000, and the transaction can be authorized and broadcasted.
