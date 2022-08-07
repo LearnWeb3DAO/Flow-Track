@@ -730,7 +730,7 @@ Now, back to the `Collection` resource. Define the following function within the
 
 ```rust
 // Domains.CollectionPrivate
-access(account) fun mintDomain(name: String, nameHash: String, expiresAt: UFix64, receiver: Capability<&{NonFungibleToken.Receiver}) {
+access(account) fun mintDomain(name: String, nameHash: String, expiresAt: UFix64, receiver: Capability<&{NonFungibleToken.Receiver}>) {
     pre {
         Domains.isAvailable(nameHash: nameHash) : "Domain not available"
     }
