@@ -13,7 +13,7 @@ There are a few different options for wallets to choose from:
 3. [Finoa](https://www.finoa.io/flow/) - An institutional grade custodial wallet (Requires KYC)
 4. [Dapper](https://www.meetdapper.com/) - A custodial web wallet (Requires KYC)
 
-We recommend using either [Lilico](https://lilico.app/) or [portto](https://portto.com). I am going to be using Lilico as it's easier to just use a browser extension than a mobile wallet during development, IMO.
+We recommend using either [Lilico](https://lilico.app/) or [portto](https://portto.com). I am going to be using Lilico as it's easier to just use a browser extension than a mobile wallet during development, in my opinion.
 
 Once you install the extension, it will take you through setting up a new FLOW wallet. Go ahead and do the required steps.
 
