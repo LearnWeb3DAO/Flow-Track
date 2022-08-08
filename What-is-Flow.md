@@ -12,17 +12,22 @@ Are you excited? 🚀
 
 Flow is a Layer-1 blockchain that is designed to be highly scalable without the need of sharding. It utilizes a multi-role architecture that makes it unique from other blockchains, and allows it to scale vertically.
 
-The Flow blockchain is also built by Dapper Labs, the company behind CryptoKitties, the ERC-721 standard for NFTs, and NBA Topshot.
+The Flow blockchain is built by Dapper Labs, the company behind CryptoKitties, the ERC-721 standard for NFTs, and NBA Topshot.
 
-By not depending on sharding, Flow provides a more developer-friendly and validator-friendly environment to build on, or run nodes for, Flow.
+By not depending on sharding, Flow provides a more developer-friendly and validator-friendly environment to build on or run nodes for Flow.
 
 <Quiz questionId="0ca62d1a-2930-4278-8aa6-95902452b824" />
 
 ## Pipelining ⚒
 
-Blockchains today require node runners to run monolithic nodes. Each node typically stores the entire state of the blockchain, and performs all the work associated with processing every transaction on the blockchain. This includes the collection of transactions being sent by users, grouping them into blocks, executing the transactions, reaching consensus on the state of the chain, and verifying each incoming block by other nodes.
+Blockchains today require node runners to run monolithic (Large in size, and made of only one thing) nodes. Each node typically stores the entire state of the blockchain, and performs all the work associated with processing every transaction on the blockchain. This includes :
+- Collection of transactions being sent by users
+- Grouping them into blocks
+- Executing the transactions
+- Reaching consensus on the state of the chain
+- Verifying each incoming block by other nodes.
 
-In the physical world, this type of approach is rarely seen. In fact, one of the great inventions by Henry Ford was the creation of the moving assembly line, which brought down the time taken to build a car from over 12 hours to just over 1 hour.
+In the physical world, this type of approach is rarely seen. In fact, one of the greatest inventions by Henry Ford was the moving assembly line, which brought down the time taken to build a car from over 12 hours to just over 1 hour.
 
 In modern CPUs as well, pipelining is a common strategy to let your CPU perform faster. Instead of processing each task one by one, pipelining separates concerns and increases parallelism that results in an increase in speed.
 
@@ -35,7 +40,7 @@ Let's take a look at an example to understand this concept better. Let's say the
 ![](https://i.imgur.com/whBgVxk.png)
 Source: [Stanford CS Department](https://cs.stanford.edu/people/eroberts/courses/soco/projects/risc/pipelining/index.html)
 
-However, a smarter approach to the problem would be to put the second load of dirty laundry into the washer after the first was already clean and whirling happily in the dryer. Then, while the first load was being folded, the second load would dry, and a third load could be added to the pipeline of laundry. Using this method, the laundry would be finished by 9:30.
+However, a smarter approach to the problem would be to put the second load of dirty laundry into the washer just after the first load finishes cleaning and is now in the dryer whirling happily. While the first load is being fold, the second load would dry, and a third load could be added to the pipeline of laundry. Using this method, the laundry would be finished by 9:30.
 
 ![](https://i.imgur.com/xOYO7U6.png)
 Source: [Stanford CS Department](https://cs.stanford.edu/people/eroberts/courses/soco/projects/risc/pipelining/index.html)
