@@ -616,11 +616,27 @@ Before we let the user purchase anything, we must make sure the user's account h
 
 Considering it is, we need to write two things now:
 1. A Cadence script that calls `getRentCost` to predict the cost of the domain
-2. A Cadence transaction that will call `registerDomain` to then buy it
+2. A Cadence script that calls `isAvailable` to check if a domain name is available
+3. A Cadence transaction that will call `registerDomain` to then buy it
 
 Open up `scripts.js` under `web/flow` directory again, and add the following code to it:
 
 ```javascript
+export async function checkIsAvailable(name) {
+  return fcl.query({
+    cadence: CHECK_IS_AVAILABLE,
+    args: (arg, t) => [arg(name, t.String)],
+  });
+}
+
+const CHECK_IS_AVAILABLE = `
+import Domains from 0xDomains
+
+pub fun main(name: String): Bool {
+  return Domains.isAvailable(nameHash: name)
+}
+`;
+
 export async function getRentCost(name, duration) {
   return fcl.query({
     cadence: GET_RENT_COST,
@@ -1317,7 +1333,7 @@ export default function ManageDomain() {
 
   // Function which calculates cost of renewal
   async function getCost() {
-    if (domainInfo.name.replace(".fns", "").length > 0 && renewFor > 0) {
+    if (domainInfo && domainInfo.name.replace(".fns", "").length > 0 && renewFor > 0) {
       const duration = (renewFor * SECONDS_PER_YEAR).toFixed(1).toString();
       const c = await getRentCost(
         domainInfo.name.replace(".fns", ""),

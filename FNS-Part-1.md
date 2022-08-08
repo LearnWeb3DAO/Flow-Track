@@ -165,7 +165,7 @@ I'm sure all of this seems a little overwhelming to look at right away. Spend so
 
 ## Domains Contract
 
-Create a file within `flow-nft-marketplace/cadence/contracts` and name it `Domains.cdc`. This is where we will write the code for our NFT Collection.
+Create a file within `flow-name-service/cadence/contracts` and name it `Domains.cdc`. This is where we will write the code for our NFT Collection.
 
 ```rust
 import NonFungibleToken from "./interfaces/NonFungibleToken.cdc"
