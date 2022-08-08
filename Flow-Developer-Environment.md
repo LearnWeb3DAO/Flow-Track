@@ -29,9 +29,9 @@ Then, select Testnet for the network.
 
 Once your wallet is all set up, we need to get some testnet FLOW tokens.
 
-1. Visit the [Flow Testnet Faucet](https://testnet-faucet.onflow.org/), and click `Fund Account` in the top right.
+1. Visit the [Flow Testnet Faucet](https://testnet-faucet.onflow.org/fund-account)
 2. Copy your wallet address from Lilico and paste it in the address input box
-3. Click on `Request Funds` and wait to receive the Testnet Tokens
+3. Click on `Fund your account` and wait to receive the Testnet Tokens
 
 <Quiz questionId="e3c5ef38-0e6a-4b64-990b-42a1611b84a5" />
 
