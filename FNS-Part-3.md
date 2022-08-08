@@ -20,7 +20,7 @@ As always, we will use Next.js to build this out. Hope you're excited!
 
 Before we set up a new Next.js app, there's one tiny thing we have to do.
 
-You see, GitHub does not pushing empty folders into a repository. If you have an empty folder inside a Git repo, it will not be pushed to GitHub when you make a commit and push.
+You see, GitHub does not push empty folders into a repository. If you have an empty folder inside a Git repo, it will not be pushed to GitHub when you make a commit and push.
 
 When we set up our Flow App using the Flow CLI, it contained an empty folder called `web`. To make sure that GitHub keeps track of the folder, even though it is an empty, the Flow CLI auto-generated a file called `.gitkeep` within the `web` folder. This file tells GitHub to ignore its rules, and let us push an empty folder to GitHub anyway when we want to.
 
