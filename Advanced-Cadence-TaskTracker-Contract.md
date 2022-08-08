@@ -4,11 +4,11 @@ In this level, we will dig a bit deeper into Cadence, and learn about Arrays, Re
 
 We will be creating a contract where every user can manage their own list of tasks they need to do, and can only add/update tasks within their own list - and not in someone else's list.
 
-## 🛝 Flow Playground
+## 👩‍🔧 Flow Playground
 
 We'll continue to use the [Flow Playground](https://play.onflow.org) to write this contract while we are still learning Cadence. Open up the Playground, and go to the `0x01` account, and delete all the default generated code - we'll start from scratch this time.
 
-## 🪵 Resources
+## 📚 Resources
 
 Resources are a little bit similar to structs, but not exactly. Cadence does have support for structs as well, but resources allow for certain different things.
 
@@ -41,11 +41,11 @@ The resource itself contains `tasks` - an array of strings (p.s. now you also kn
 
 Lastly, to note, is that resources need their own `init()` function to initialize values of member variables. In this case, `tasks`. We initialize it to an empty array to begin with.
 
-## 🫱 Resource Creation
+## 🔨 Resource Creation
 
 Resources need to be created and used very carefully. Resources always live or exist in one 'position' only i.e. you cannot create copies of resources. If you want to move a resource from one 'position' to another, this must be done explicitly, let's see how.
 
-Add a function to your contract above as follows
+Add a function inside your contract above as follows
 
 ```javascript
 pub fun createTaskList(): @TaskList {
@@ -58,6 +58,31 @@ pub fun createTaskList(): @TaskList {
     // let newTaskList <- myTaskList
 
     return <- myTaskList
+}
+```
+
+Your contract should look like this :
+
+```javascript
+pub contract TaskTracker {
+
+    pub resource TaskList {
+        pub var tasks: [String]
+        init() {
+            self.tasks=[]
+        }
+
+    pub fun createTaskList(): @TaskList {
+        let myTaskList <- create TaskList()
+
+        // This will not work
+        // let newTaskList = myTaskList
+
+        // This will work
+        // let newTaskList <- myTaskList
+
+        return <- myTaskList
+    }
 }
 ```
 
@@ -104,6 +129,7 @@ transaction() {
   prepare(acct: AuthAccount) {
     let myTaskList <- TaskTracker.createTaskList()
     acct.save(<- myTaskList, to: /storage/MyTaskList)
+    log("Created Resource")
   }
 
   execute {}
@@ -113,7 +139,7 @@ transaction() {
 
 This time, we're actually using the `prepare` phase of the transaction. We use the `createTaskList` function to create a new `TaskList` resource and 'move' it into the `myTaskList` variable.
 
-Then, we use `acct.save` to write data in our Account Storage, and 'move' the resource from `myTaskList` into Account Storage, at the `/storage/MyTaskList` path.
+Then, we use `acct.save` to write data in our Account Storage, and 'move' the resource from `myTaskList` into Account Storage, at the `/storage/MyTaskList` path. The `log` command will print the passed value into the console for visual feedback.
 
 Later on, in any other transaction, we can use `acct.load` to load the resource from our storage, and do whatever we want with it. We will use this to add/delete tasks in our Task List shortly.
 
@@ -172,11 +198,15 @@ Deploy this contract through `0x01`, and now we will create four transaction scr
 
 ## 🤝 All Transactions
 
-We already created the first transaction, to save the `TaskList` resource in `/storage/` above. I will just rename the transaction to `Save Resource` on the Playground to easily identify it (Look for a pencil edit icon next to the transaction name in the sidebar).
+We already created the first transaction, to save the `TaskList` resource in `/storage/` above. Let's rename the transaction to `Save Resource` on the Playground to easily identify it (Look for a pencil edit icon next to the transaction name in the sidebar. Make sure the `Transaction` is clicked).
 
-Add three more transactions by clicking the `+` button under `Transactions` in the sidebar.
+![RenameTransaction](https://i.imgur.com/CaK7McC.png)
 
-I will name the first one `Add Task`
+Let's add three more transactions by clicking the `+` button on the right side of the `Transaction Templates` in the sidebar, trice.
+
+![AddMoreTransactions](https://i.imgur.com/rDztcoA.png)
+
+Let's rename the first newly created task to `Add Task` and add the following code :
 
 ```javascript
 // Add Task Transaction
@@ -189,6 +219,7 @@ transaction(task: String) {
         ?? panic("Nothing lives at this path")
     myTaskList.addTask(task: task)
     acct.save(<- myTaskList, to: /storage/MyTaskList)
+    log("Created a Task")
   }
 
   execute {}
@@ -198,13 +229,15 @@ transaction(task: String) {
 
 An interesting thing to note here is the `?? panic` syntax when using `acct.load` to load our `TaskList` from storage. This is because Cadence has no idea, pre-execution, whether or not something actually lives at that storage path. It is possible you gave an invalid path, and for that reason `acct.load` might return `nil` (null).
 
-In the case that that happens, you can throw a custom error using the `?? panic(...)` syntax. The `??` operator is called the null-coalescing operator, and also exists in JavaScript. Basically, if the value to the left-hand side of `??` is `nil`, then the right-hand side of `??` is run. In our case, the `panic` statement is run.
+In the case that happens, you can throw a custom error using the `?? panic(...)` syntax. The `??` operator is called the [null-coalescing operator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Nullish_coalescing_operator), and also exists in JavaScript. Basically, if the value to the left-hand side of `??` is `nil`, then the right-hand side of `??` is run. In our case, the `panic` statement is run.
 
 The rest of the code is fairly straightforward. We load the `TaskList` from storage, use the resource-defined `addTask` function on it, and then save it back into storage at the same path.
 
 ---
 
-Now, for the second transaction, I will name it `Remove Task`, though we will see a different way of accessing storage.
+Now, for the second newly created transaction, let's rename it to `Remove Task`. 
+
+We will now look at a different way of accessing storage.
 
 ```javascript
 // Remove Task Transaction
@@ -213,8 +246,10 @@ import TaskTracker from 0x01
 transaction(idx: Integer) {
 
   prepare(acct: AuthAccount) {
-    let myTaskList = acct.borrow<&TaskTracker.TaskList>(from: /storage/MyTaskList) ?? panic("Nothing lives at this path")
+    let myTaskList = acct.borrow<&TaskTracker.TaskList>(from: /storage/MyTaskList) 
+        ?? panic("Nothing lives at this path")
     myTaskList.removeTask(idx: idx)
+    log("Removed a Task")
   }
 
   execute {}
@@ -224,13 +259,15 @@ transaction(idx: Integer) {
 
 Note, that instead of `.load()` here we used `.borrow()`. Borrow is similar to `load`, except it doesn't actually 'move' the resource out of storage, it just borrows a reference to it.
 
+> FUN FACT : Reference means that the variable `myTaskList` holds the memory address location to the Resource we created. That means, changing anything in `myTaskList` will effect the original Resource. This works the same way as `storage` in Solidity.
+
 This is also highlighted by the fact that we did not need to use the `<-` move operator, and an `=` equals operator was good enough. Lastly, the data type for Task List is not defined with an `@TaskTracker.TaskList` and instead uses `&TaskTracker.TaskList`. The `&` symbol signifies this is a reference to the resource, not the resource itself.
 
 Since when we are borrowing we are not actually moving the resource out of storage, we do not need to save it back into storage. We can just call the function on it, and the resource stays where it is.
 
 ---
 
-Lastly, I will create a transaction named `View Tasks`
+Lastly, let's rename the final newly created transaction to `View Tasks` and write the following code in :
 
 ```javascript
 // View Tasks Transaction
@@ -239,7 +276,8 @@ import TaskTracker from 0x01
 transaction() {
 
   prepare(acct: AuthAccount) {
-    let myTaskList = acct.borrow<&TaskTracker.TaskList>(from: /storage/MyTaskList) ?? panic("Nothing lives at this path")
+    let myTaskList = acct.borrow<&TaskTracker.TaskList>(from: /storage/MyTaskList) 
+        ?? panic("Nothing lives at this path")
     log(myTaskList.tasks)
   }
 
@@ -256,9 +294,15 @@ Now it's time to go play with your `TaskTracker` contract.
 
 Redeploy the contract from `0x01` to start with a clean slate.
 
-Use `0x02` (or another address) to create the resource using the `Save Resource` transaction that uses `createTaskList`.
+Change into any of the other addresses by clicking on the `0x01` signer on the right pop-up panel, and then selecting another signer like `0x02` from the list above. 
 
-Use that same account to add a few tasks, view tasks, remove tasks, and so on.
+![ChangingSigners](https://i.imgur.com/PNyoGer.jpg)
+
+Once changed, try to create the resource using the `Save Resource` transaction that uses `createTaskList`. You will see an output in the console "Created Resource".
+
+> NOTE : You will get an error if you try to run `Save Resource` again. This is because, as mentioned before, Resources cannot be overridden, and can only exist in one place.
+
+Use that same account to add a few tasks, view tasks, remove tasks, and so on. Make sure to keep an eye on the console to see the outputs we logged.
 
 Congratulations, you've built a tasks tracker where each user can maintain their own personal list of tasks in a resource that is not accessible to others on the network.
 
