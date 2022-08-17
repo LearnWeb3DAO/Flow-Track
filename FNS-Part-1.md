@@ -584,7 +584,7 @@ pub resource Collection: CollectionPublic, CollectionPrivate, NonFungibleToken.P
 }
 ```
 
-The three interfaces coming from `NonFungibleToken` - `Provider`, `Receiver`, and `CollectionPublic` define functions like `deposit`, `withdraw`, `borrowNFT`, and `getIDs`. I will explain waht each of them do as we write them.
+The three interfaces coming from `NonFungibleToken` - `Provider`, `Receiver`, and `CollectionPublic` define functions like `deposit`, `withdraw`, `borrowNFT`, and `getIDs`. I will explain what each of them do as we write them.
 
 Let's create a public variable to store references to the `NFT` resources that belong to this Collection, and create a simple initializer. Add the following code within the `Collection` resource block:
 
