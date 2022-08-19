@@ -833,7 +833,7 @@ export default function Purchase() {
 
 <Quiz questionId="55a34d46-5e92-4369-b922-4ee3ab24a67b" />
 
-Awesome! Create a CSS file named `Purchase.module.css` under `pages/styles` and copy over the following code there:
+Awesome! Create a CSS file named `Purchase.module.css` under `web/styles` and copy over the following code there:
 
 ```css
 .container {
