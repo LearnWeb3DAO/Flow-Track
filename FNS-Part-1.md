@@ -992,7 +992,7 @@ In Ethereum, we are used to ERC-20 token balances being stored as part of the gl
 
 Similar to how the `NonFungibleToken` standard defines `Collection` - where each user has a `Collection` of their own stored in their storage, and that collection contains the NFTs they own from that smart contract, the `FungibleToken` has `Vault`s.
 
-A `Vault` is nothing more than a collection of tokens. You could define a `Vault` to be empty, to have some portion of the total tokens you own of that type, or to have all the tokens you own of that type. It is completely upto the user.
+A `Vault` is nothing more than a collection of tokens. You could define a `Vault` to be empty, to have some portion of the total tokens you own of that type, or to have all the tokens you own of that type. It is completely up to the user.
 
 In context of the Registrar, we will create an empty `Vault` for the `FlowToken` - which is the token we will accept for payment in exchange for these domains. As users buy new domains, or renew existing ones, they will be making deposits to this `Vault`.
 
