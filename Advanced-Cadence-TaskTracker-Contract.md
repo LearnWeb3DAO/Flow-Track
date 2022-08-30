@@ -71,6 +71,7 @@ pub contract TaskTracker {
         init() {
             self.tasks=[]
         }
+    }
 
     pub fun createTaskList(): @TaskList {
         let myTaskList <- create TaskList()
