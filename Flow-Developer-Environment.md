@@ -13,7 +13,7 @@ There are a few different options for wallets to choose from:
 3. [Finoa](https://www.finoa.io/flow/) - An institutional grade custodial wallet (Requires KYC)
 4. [Dapper](https://www.meetdapper.com/) - A custodial web wallet (Requires KYC)
 
-We recommend using either [Lilico](https://lilico.app/) or [portto](https://portto.com). I am going to be using Lilico as it's easier to just use a browser extension than a mobile wallet during development, IMO.
+We recommend using either [Lilico](https://lilico.app/) or [portto](https://portto.com). I am going to be using Lilico as it's easier to just use a browser extension than a mobile wallet during development, in my opinion.
 
 Once you install the extension, it will take you through setting up a new FLOW wallet. Go ahead and do the required steps.
 
@@ -29,9 +29,9 @@ Then, select Testnet for the network.
 
 Once your wallet is all set up, we need to get some testnet FLOW tokens.
 
-1. Visit the [Flow Testnet Faucet](https://testnet-faucet.onflow.org/), and click `Fund Account` in the top right.
+1. Visit the [Flow Testnet Faucet](https://testnet-faucet.onflow.org/fund-account)
 2. Copy your wallet address from Lilico and paste it in the address input box
-3. Click on `Request Funds` and wait to receive the Testnet Tokens
+3. Click on `Fund your account` and wait to receive the Testnet Tokens
 
 <Quiz questionId="e3c5ef38-0e6a-4b64-990b-42a1611b84a5" />
 

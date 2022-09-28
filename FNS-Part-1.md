@@ -165,7 +165,7 @@ I'm sure all of this seems a little overwhelming to look at right away. Spend so
 
 ## Domains Contract
 
-Create a file within `flow-nft-marketplace/cadence/contracts` and name it `Domains.cdc`. This is where we will write the code for our NFT Collection.
+Create a file within `flow-name-service/cadence/contracts` and name it `Domains.cdc`. This is where we will write the code for our NFT Collection.
 
 ```javascript
 import NonFungibleToken from "./interfaces/NonFungibleToken.cdc"
@@ -730,7 +730,7 @@ Now, back to the `Collection` resource. Define the following function within the
 
 ```javascript
 // Domains.CollectionPrivate
-access(account) fun mintDomain(name: String, nameHash: String, expiresAt: UFix64, receiver: Capability<&{NonFungibleToken.Receiver}) {
+access(account) fun mintDomain(name: String, nameHash: String, expiresAt: UFix64, receiver: Capability<&{NonFungibleToken.Receiver}>) {
     pre {
         Domains.isAvailable(nameHash: nameHash) : "Domain not available"
     }
@@ -992,7 +992,7 @@ In Ethereum, we are used to ERC-20 token balances being stored as part of the gl
 
 Similar to how the `NonFungibleToken` standard defines `Collection` - where each user has a `Collection` of their own stored in their storage, and that collection contains the NFTs they own from that smart contract, the `FungibleToken` has `Vault`s.
 
-A `Vault` is nothing more than a collection of tokens. You could define a `Vault` to be empty, to have some portion of the total tokens you own of that type, or to have all the tokens you own of that type. It is completely upto the user.
+A `Vault` is nothing more than a collection of tokens. You could define a `Vault` to be empty, to have some portion of the total tokens you own of that type, or to have all the tokens you own of that type. It is completely up to the user.
 
 In context of the Registrar, we will create an empty `Vault` for the `FlowToken` - which is the token we will accept for payment in exchange for these domains. As users buy new domains, or renew existing ones, they will be making deposits to this `Vault`.
 

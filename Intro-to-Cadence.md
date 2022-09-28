@@ -2,7 +2,7 @@
 
 ![](https://images.unsplash.com/photo-1635407640793-72dd329d218a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1374&q=80)
 
-In this level, we will learn about Cadence, the smart contracts programming language created and used by Flow. As we have already mentioned, Cadence is a resource-oriented programming language, so it comes with bit of a learning curve. The syntax for it is kind of like if Golang and Javascript had a baby.
+In this level, we will learn about Cadence, the smart contracts programming language created and used by Flow. As we have already mentioned, Cadence is a resource-oriented programming language, so it comes with bit of a learning curve. The syntax for it is kind of like a mixture between Golang and Javascript.
 
 Before we get into that, let's understand a little bit around how Flow works.
 
@@ -12,13 +12,13 @@ Transactions on Flow are not much different than transactions on any blockchain.
 
 Scripts, on the other hand, are function calls that do not cost money. They're like `view` functions in Solidity.
 
-The main thing to remember in Flow is that both Transactions and Scripts are written in Cadence as well, and then they're just executed through a wallet. But, it is Cadence code that determines what a single transaction/script is going to do, what contracts it's going to interact with, what values it's going to return, etc.
+The main thing to remember in Flow is that both Transactions and Scripts are written in Cadence, and then they're just executed through a wallet. It is Cadence code that determines what a single transaction/script is going to do, what contracts it's going to interact with, what values it's going to return, etc.
 
 We will clear this up with examples as we proceed.
 
 <Quiz questionId="79fbb5ab-7f0e-48cf-8904-df008fc1920e" />
 
-## 🛝 Flow Playground
+## 👨‍💻 Flow Playground
 
 To start testing, Flow offers an online playground where you can test your code. This works somewhat similar to Remix with a Javascript VM on EVM chains.
 
@@ -75,7 +75,7 @@ access(all) contract HelloWorld {
 > In newer versions of Cadence, you can replace `access(all)` with `pub` which is a shorthand that means the same thing. i.e. "public access" or "access for all".
 > We will be following the `pub` convention as we proceed.
 
-the `pub contract ContractName` will always be necessary no matter what smart contract you're writing.
+The `pub contract ContractName` will always be necessary no matter what smart contract you're writing.
 
 <Quiz questionId="f0c37a92-c310-4118-b730-62e6072c3906" />
 
@@ -99,7 +99,7 @@ init() {
 }
 ```
 
-Every Cadence smart contract, if it has any variables at all, *MUST* contain an `init()` function as that is how you set the initial values for any variables you have. Unlike Solidity, you cannot set initial values directly next to the variable declaration.
+Every Cadence smart contract, if it has any variables at all, **MUST** contain an `init()` function as that is how you set the initial values for any variables you have. Unlike Solidity, you cannot set initial values directly next to the variable declaration.
 
 In this case, we are setting the initial value of the `greeting` variable.
 
@@ -132,7 +132,7 @@ Once the contract is deployed, you will see some logs in the console at the bott
 
 Now, if we want to read the value of the `greeting` variable, we will write a Cadence script to do just that.
 
-In the sidebar, click on `Script` under Script Templates. There should be some pre-existing code, just a function that returns the value `1`, let's get rid of that.
+In the left sidebar, click on `Script` under Script Templates. There should be some pre-existing code, just a function that returns the value `1`, let's get rid of that.
 
 > NOTE: Scripts are not smart contracts, so code in scripts does not need to be enclosed in the `pub contract ContractName { ... }` block.
 
@@ -200,7 +200,7 @@ Now, let's see how a transaction would work. But first, we need to update our sm
 
 ### Adding a function that writes data
 
-Go back to `0x01`, and add a new function in the smart contract code.
+Click on the `0x01` to go back, and add a new function in the smart contract code.
 
 ```javascript
 pub fun setGreeting(newGreeting: String) {
@@ -232,11 +232,11 @@ We also changed `access(all)` to `pub` while we were at it, but that has nothing
 
 Another cool thing to notice here is we added a `log`. Logs are like `console.log` in Javascript. They're built in to Cadence, and allow you to print statements in the console during function execution. We'll see it's output soon.
 
-Once you do this, you'll see the error magically goes away. Go ahead and deploy the modified contract to the `0x01` account again, and then proceed.
+Once you do this, you'll see the error magically goes away. Go ahead and re-deploy the modified contract to the `0x01` account again, and then proceed.
 
 ### Understanding a Transaction
 
-In the sidebar, click on `Transaction` under Transaction Templates. You'll see some boilerplate code there that looks like this
+In the left sidebar, click on `Transaction` under Transaction Templates. You'll see some boilerplate code there that looks like this
 
 ```javascript
 import HelloWorld from 0x01
@@ -288,6 +288,8 @@ In the `execute` phase, we call the `setGreeting` function on the smart contract
 You should see something like this pop up on the Playground
 
 ![](https://i.imgur.com/k7leI0d.png)
+
+> NOTE : If there are any errors, save the playground by clicking on the Green `Save` button on the top right and refresh your page. Alternatively, you can ask for help in our [Discord server](https://discord.gg/NmpFaTHCzj)
 
 Notice that to send the transaction, you need to provide a value for `newGreeting`. Additionally, you can perform the transaction as any one of the five accounts the playground gives us. By default, it must've chosen `0x01`, but you can go ahead and switch to a different Signer if you want.
 

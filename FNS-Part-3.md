@@ -20,7 +20,7 @@ As always, we will use Next.js to build this out. Hope you're excited!
 
 Before we set up a new Next.js app, there's one tiny thing we have to do.
 
-You see, GitHub does not pushing empty folders into a repository. If you have an empty folder inside a Git repo, it will not be pushed to GitHub when you make a commit and push.
+You see, GitHub does not push empty folders into a repository. If you have an empty folder inside a Git repo, it will not be pushed to GitHub when you make a commit and push.
 
 When we set up our Flow App using the Flow CLI, it contained an empty folder called `web`. To make sure that GitHub keeps track of the folder, even though it is an empty, the Flow CLI auto-generated a file called `.gitkeep` within the `web` folder. This file tells GitHub to ignore its rules, and let us push an empty folder to GitHub anyway when we want to.
 
@@ -616,11 +616,27 @@ Before we let the user purchase anything, we must make sure the user's account h
 
 Considering it is, we need to write two things now:
 1. A Cadence script that calls `getRentCost` to predict the cost of the domain
-2. A Cadence transaction that will call `registerDomain` to then buy it
+2. A Cadence script that calls `isAvailable` to check if a domain name is available
+3. A Cadence transaction that will call `registerDomain` to then buy it
 
 Open up `scripts.js` under `web/flow` directory again, and add the following code to it:
 
 ```javascript
+export async function checkIsAvailable(name) {
+  return fcl.query({
+    cadence: CHECK_IS_AVAILABLE,
+    args: (arg, t) => [arg(name, t.String)],
+  });
+}
+
+const CHECK_IS_AVAILABLE = `
+import Domains from 0xDomains
+
+pub fun main(name: String): Bool {
+  return Domains.isAvailable(nameHash: name)
+}
+`;
+
 export async function getRentCost(name, duration) {
   return fcl.query({
     cadence: GET_RENT_COST,
@@ -817,7 +833,7 @@ export default function Purchase() {
 
 <Quiz questionId="55a34d46-5e92-4369-b922-4ee3ab24a67b" />
 
-Awesome! Create a CSS file named `Purchase.module.css` under `pages/styles` and copy over the following code there:
+Awesome! Create a CSS file named `Purchase.module.css` under `web/styles` and copy over the following code there:
 
 ```css
 .container {
@@ -1317,7 +1333,7 @@ export default function ManageDomain() {
 
   // Function which calculates cost of renewal
   async function getCost() {
-    if (domainInfo.name.replace(".fns", "").length > 0 && renewFor > 0) {
+    if (domainInfo && domainInfo.name.replace(".fns", "").length > 0 && renewFor > 0) {
       const duration = (renewFor * SECONDS_PER_YEAR).toFixed(1).toString();
       const c = await getRentCost(
         domainInfo.name.replace(".fns", ""),
