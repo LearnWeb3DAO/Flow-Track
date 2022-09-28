@@ -86,6 +86,7 @@ Each Flow account, not just smart contracts, can store their own data. We talked
 The account storage behaves syntactically similar to the storage in any filesystem - think Windows, Linux, or macOS filesystems. Each piece of data (file) has a path (file-path). Data is written to certain paths, and can be read from those paths later on.
 
 There are 3 types of paths, or folders, where data can reside in:
+
 1. `/storage/` - This is private account storage that only the account owner can access
 2. `/public/` - This is public storage that is available to everyone
 3. `/private/` - This is permissioned storage that is available to the account owner and anyone the owner provides explicit permission to
@@ -126,7 +127,7 @@ Hopefully by now you're starting to see how the flow will look like.
 1. User creates a Task List, and saves it to their `/storage/` path.
 2. User can add/remove tasks in their personal Task List using Resource-defined functions
 
-Modify the smart contract in `0x01`, and add these two functions *INSIDE* your Resource.
+Modify the smart contract in `0x01`, and add these two functions _INSIDE_ your Resource.
 
 ```javascript
 pub fun addTask(task: String) {
@@ -156,7 +157,7 @@ pub contract TaskTracker {
             self.tasks.remove(at: idx)
         }
     }
-    
+
     pub fun createTaskList(): @TaskList {
         let myTaskList <- create TaskList()
         return <- myTaskList
@@ -165,6 +166,7 @@ pub contract TaskTracker {
 ```
 
 Deploy this contract through `0x01`, and now we will create four transaction scripts to
+
 1. Create the TaskList resource and save it in storage
 2. Add a task to the resource in the user's storage
 3. Remove a task from the resource in the user's storage
@@ -185,7 +187,7 @@ import TaskTracker from 0x01
 transaction(task: String) {
 
   prepare(acct: AuthAccount) {
-    let myTaskList <- acct.load<@TaskTracker.TaskList>(from: /storage/MyTaskList) 
+    let myTaskList <- acct.load<@TaskTracker.TaskList>(from: /storage/MyTaskList)
         ?? panic("Nothing lives at this path")
     myTaskList.addTask(task: task)
     acct.save(<- myTaskList, to: /storage/MyTaskList)

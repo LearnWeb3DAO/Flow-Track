@@ -1,4 +1,5 @@
 # General Purpose NFT Storefront on Flow - Part 1
+
 ![](https://i.imgur.com/LgpRV1K.png)
 
 In this lesson series, we will look into Flow's NFT Storefront Smart Contracts, and understand how they are different from marketplaces such as OpenSea or LooksRare on Ethereum, and what makes them interesting.
@@ -46,9 +47,9 @@ Now, let's dig into the smart contract!
 Quickly skimming through the contract, you will notice there are two major Resources being used that we should be interested in.
 
 - `Listing` resource
-    - Implements `ListingPublic` resource interface
+  - Implements `ListingPublic` resource interface
 - `Storefront` resource
-    - Implements `StorefrontPublic` and `StorefrontManager` resource interfaces
+  - Implements `StorefrontPublic` and `StorefrontManager` resource interfaces
 
 It's interesting to me that the `Listing` resource has no private portion, only a public interface implementation. I would have imagined there would be private functions to update the Listing price, etc - so I'll just make a mental note of that - I'm sure there's some way for the owner to update the Listing price so will be interesting to see how they did it.
 
@@ -72,9 +73,10 @@ I'll skip `SaleCut` for now - as it looks like something that would be a part of
 `ListingDetails` struct probably just contains all the information around a `Listing`. Similar to `DomainInfo` in the FNS lesson series earlier. Let's look at this and understand what information represents a single Listing.
 
 #### Variables
+
 Let's look at the variables for the struct first:
 
-```rust
+```javascript
 pub var storefrontID: UInt64
 pub var purchased: Bool
 pub let nftType: Type
@@ -106,7 +108,7 @@ Similarly, in FNS, we were accepting payment in a Flow Token Vault, i.e. only ac
 
 The `Type` data type is something that represents a data type itself. Just like how you can specify primitive data types (`String`, `Bool`, `UInt64`, etc) or custom data types (`Domains.NFT`, `Domains.Collection`, etc) - the `Type` data type can store the data type being used itself.
 
-For example, `nftType` here could store the *data type* `Domains.NFT`, or `NonFungibleToken.NFT`, or `SomeNFTContract.NFT` etc. Note this is different from storing an actual value *of* that data type - it's just storing the data type itself.
+For example, `nftType` here could store the _data type_ `Domains.NFT`, or `NonFungibleToken.NFT`, or `SomeNFTContract.NFT` etc. Note this is different from storing an actual value _of_ that data type - it's just storing the data type itself.
 
 Similarly, in FNS we had `FlowToken.Vault` (which implements `FungibleToken.Vault`). `salePaymentVaultType` here could store the data types `FlowToken.Vault`, `USDCToken.Vault`, etc.
 
@@ -120,7 +122,7 @@ These can be used by the user to specify different currencies for each Listing t
 
 #### Functions
 
-```rust
+```javascript
 access(contract) fun setToPurchased() {
     self.purchased = true
 }
@@ -133,7 +135,8 @@ access(contract) fun setCustomID(customID: String?){
 Both functions are quite self explanatory. They give the `NFTStorefrontV2` contract permission to update a Listing's `purchased` and `customID` values. `purchased` starts off with an initial value `false`, and can only be updated to `true` - it can never go from `true` back to `false`
 
 #### Initializer
-```rust
+
+```javascript
  init (
     nftType: Type,
     nftUUID: UInt64,
@@ -189,7 +192,7 @@ The only interesting thing here is the calculation of the `salePrice`. It's the 
 
 Great, now that we have an educated guess around what `SaleCut` might be referring to, let's go back to it and look at what it actually is.
 
-```rust
+```javascript
  pub struct SaleCut {
     pub let receiver: Capability<&{FungibleToken.Receiver}>
     pub let amount: UFix64
@@ -209,12 +212,12 @@ Pretty standard stuff. I think our understanding is correct. Multiple people can
 
 Let's check out the `ListingPublic` resource interface and see what functions we can expect for the `Listing` resource.
 
-```rust
+```javascript
 pub resource interface ListingPublic {
     pub fun borrowNFT(): &NonFungibleToken.NFT?
 
     pub fun purchase(
-        payment: @FungibleToken.Vault, 
+        payment: @FungibleToken.Vault,
         commissionRecipient: Capability<&{FungibleToken.Receiver}>?,
     ): @NonFungibleToken.NFT
 
@@ -242,9 +245,9 @@ The `Listing` resource itself is quite huge, partly due to the comments, and par
 
 Let's take a look at the implementation of the `purchase` function.
 
-```rust
+```javascript
 pub fun purchase(
-    payment: @FungibleToken.Vault, 
+    payment: @FungibleToken.Vault,
     commissionRecipient: Capability<&{FungibleToken.Receiver}>?,
 ): @NonFungibleToken.NFT {
 
@@ -256,7 +259,7 @@ pub fun purchase(
         self.owner != nil : "Resource doesn't have the assigned owner"
     }
     // Make sure the listing cannot be purchased again.
-    self.details.setToPurchased() 
+    self.details.setToPurchased()
 
     if self.details.commissionAmount > 0.0 {
         // If commission recipient is nil, Throw panic.
@@ -298,7 +301,7 @@ pub fun purchase(
                                 .borrow() ?? panic("Unable to borrow the storeFrontManager resource")
     let duplicateListings = storeFrontPublicRef.getDuplicateListingIDs(nftType: self.details.nftType, nftID: self.details.nftID, listingID: self.uuid)
 
-    // Let's force removal of the listing in this storefront for the NFT that is being purchased. 
+    // Let's force removal of the listing in this storefront for the NFT that is being purchased.
     for listingID in duplicateListings {
         storeFrontPublicRef.cleanup(listingResourceID: listingID)
     }
@@ -308,7 +311,7 @@ pub fun purchase(
     // The first receiver should therefore either be the seller, or an agreed recipient for
     // any unpaid cuts.
     var residualReceiver: &{FungibleToken.Receiver}? = nil
-    // Pay the comission 
+    // Pay the comission
     // Pay each beneficiary their amount of the payment.
     for cut in self.details.saleCuts {
         if let receiver = cut.receiver.borrow() {
@@ -367,7 +370,7 @@ Finally, we emit a `ListingCompleted` event to let everyone know a listing has b
 
 Let's look at the private portion of the functions present in a Storefront resource.
 
-```rust
+```javascript
 pub resource interface StorefrontManager {
     pub fun createListing(
         nftProviderCapability: Capability<&{NonFungibleToken.Provider, NonFungibleToken.CollectionPublic}>,
@@ -389,7 +392,7 @@ Seems pretty straightforward. One function to create a new listing within the St
 
 ### StorefrontPublic
 
-```rust
+```javascript
 pub resource interface StorefrontPublic {
     pub fun getListingIDs(): [UInt64]
     pub fun getDuplicateListingIDs(nftType: Type, nftID: UInt64, listingID: UInt64): [UInt64]
@@ -409,7 +412,7 @@ So it sounds like duplicate listings don't exactly mean an exact replica, but ra
 
 This is further highlighted by the dictionary stored in the `Storefront` resource:
 
-```rust
+```javascript
 /// Dictionary to keep track of listing ids for same NFTs listing.
 /// nftType.identifier -> nftID -> [listing resource ID]
 access(contract) var listedNFTs: {String: {UInt64 : [UInt64]}}
@@ -419,7 +422,7 @@ So for a given 'type' of NFT, we have a certain nftID, which can be put up for s
 
 Apart from this, note that within the `createListing` function of the Storefront, there exists this line:
 
-```rust
+```javascript
 // Add the `listingResourceID` in the tracked listings.
 self.addDuplicateListing(nftIdentifier: nftType.identifier, nftID: nftID, listingResourceID: listingResourceID)
 ```
@@ -431,19 +434,20 @@ Everything else is mostly straightforward within the `Storefront` resource. I hi
 <Quiz questionId="ed19b479-53af-4e4d-8b56-a9bd1082696c" />
 
 ### Global Things
+
 Last but not least, there is a global function and the contract initializer we need to look at.
 
-```rust
+```javascript
 pub fun createStorefront(): @Storefront {
     return <-create Storefront()
-}    
+}
 ```
 
 This function just creates a new `Storefront` resource and returns it to the caller. Essentially, the idea is that each user manages their own `Storefront` resource, and various marketplaces can gather data emitted through events by the smart contract to build up their website listings page, activity page, etc.
 
 This is a public function, i.e. anyone can come in and create a `Storefront` resource for themselves.
 
-```rust
+```javascript
 init () {
     self.StorefrontStoragePath = /storage/NFTStorefrontV2
     self.StorefrontPublicPath = /public/NFTStorefrontV2
@@ -464,7 +468,6 @@ We see that most NFT projects on Flow actually have their own in-built custom-de
 - [NFL All Day Marketplace](https://nflallday.com/marketplace/moments)
 - [UFC Strike Marketplace](https://ufcstrike.com/p2pmarketplace)
 - [Flovatar Marketplace](https://flovatar.com/marketplace)
-
 
 and many more... Find the full list on [Flowverse Marketplaces](https://www.flowverse.co/categories/marketplaces).
 
@@ -488,7 +491,7 @@ Hopefully this level presented some challenges to you. I intentionally left out 
 
 Regardless, it's pretty cool to me that marketplaces on Flow can all use the same shared base smart contract where each user can set up their own Storefront and add Listings to it, and the various marketplaces can just listen for the events being emitted by the contract to display active listings on their website.
 
-Since we don't have something like The Graph on Flow (maybe one of you wants to build it), such indexing of these events has to be done ourselves. Thankfully, the Flow Client Library (FCL) has functions which can help us return a list of events of a specific type within a 250 block range, but that still means to index *every* event from the beginning of the blockchain, we have to write code to fetch those events in 250 block chunks, and save them in a local database somewhere, so our marketplace can display *all* listings that are active - not just the ones which were created/updated within the last 250 blocks.
+Since we don't have something like The Graph on Flow (maybe one of you wants to build it), such indexing of these events has to be done ourselves. Thankfully, the Flow Client Library (FCL) has functions which can help us return a list of events of a specific type within a 250 block range, but that still means to index _every_ event from the beginning of the blockchain, we have to write code to fetch those events in 250 block chunks, and save them in a local database somewhere, so our marketplace can display _all_ listings that are active - not just the ones which were created/updated within the last 250 blocks.
 
 You can find an example of such an indexer open sourced by the [Rarible](https://rarible.org) team here - [rarible/flow-nft-indexer](https://github.com/rarible/flow-nft-indexer). While it's not an indexer for the Storefront, it is an indexer for NFTs generally to track all NFTs that exist on Flow. It's written in Kotlin, and uses MongoDB as a backend to save data to.
 

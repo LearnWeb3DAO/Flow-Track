@@ -18,25 +18,25 @@ Open this file up in your code editor, and the default should look something lik
 
 ```json
 {
-	"emulators": {
-		"default": {
-			"port": 3569,
-			"serviceAccount": "emulator-account"
-		}
-	},
-	"contracts": {},
-	"networks": {
-		"emulator": "127.0.0.1:3569",
-		"mainnet": "access.mainnet.nodes.onflow.org:9000",
-		"testnet": "access.devnet.nodes.onflow.org:9000"
-	},
-	"accounts": {
-		"emulator-account": {
-			"address": "f8d6e0586b0a20c7",
-			"key": "2619878f0e2ff438d17835c2a4561cb87b4d24d72d12ec34569acd0dd4af7c21"
-		}
-	},
-	"deployments": {}
+  "emulators": {
+    "default": {
+      "port": 3569,
+      "serviceAccount": "emulator-account"
+    }
+  },
+  "contracts": {},
+  "networks": {
+    "emulator": "127.0.0.1:3569",
+    "mainnet": "access.mainnet.nodes.onflow.org:9000",
+    "testnet": "access.devnet.nodes.onflow.org:9000"
+  },
+  "accounts": {
+    "emulator-account": {
+      "address": "f8d6e0586b0a20c7",
+      "key": "2619878f0e2ff438d17835c2a4561cb87b4d24d72d12ec34569acd0dd4af7c21"
+    }
+  },
+  "deployments": {}
 }
 ```
 
@@ -88,29 +88,29 @@ Awesome! If you look at your `flow.json` file now, it will look something like t
 
 ```json
 {
-	"emulators": {
-		"default": {
-			"port": 3569,
-			"serviceAccount": "emulator-account"
-		}
-	},
-	"contracts": {},
-	"networks": {
-		"emulator": "127.0.0.1:3569",
-		"mainnet": "access.mainnet.nodes.onflow.org:9000",
-		"testnet": "access.devnet.nodes.onflow.org:9000"
-	},
-	"accounts": {
-		"emulator-account": {
-			"address": "f8d6e0586b0a20c7",
-			"key": "2619878f0e2ff438d17835c2a4561cb87b4d24d72d12ec34569acd0dd4af7c21"
-		},
-		"testnet": {
-			"address": "a47932041e18e39a",
-			"key": "e31fa3014f4d8400c93c25e1939f24f982b72fa9359433ff06126c40428c7548"
-		}
-	},
-	"deployments": {}
+  "emulators": {
+    "default": {
+      "port": 3569,
+      "serviceAccount": "emulator-account"
+    }
+  },
+  "contracts": {},
+  "networks": {
+    "emulator": "127.0.0.1:3569",
+    "mainnet": "access.mainnet.nodes.onflow.org:9000",
+    "testnet": "access.devnet.nodes.onflow.org:9000"
+  },
+  "accounts": {
+    "emulator-account": {
+      "address": "f8d6e0586b0a20c7",
+      "key": "2619878f0e2ff438d17835c2a4561cb87b4d24d72d12ec34569acd0dd4af7c21"
+    },
+    "testnet": {
+      "address": "a47932041e18e39a",
+      "key": "e31fa3014f4d8400c93c25e1939f24f982b72fa9359433ff06126c40428c7548"
+    }
+  },
+  "deployments": {}
 }
 ```
 
@@ -122,8 +122,8 @@ If you remember, in the contract we wrote, we were importing the other contracts
 
 For example, we did things like
 
-```rust
-import NonFungibleToken from "./interfaces/NonFungibleToken.cdc"
+```javascript
+import NonFungibleToken from "./interfaces/NonFungibleToken.cdc";
 ```
 
 However, if you remember from the `TaskTracker` level and the Flow Playground, contracts are actually imported on Flow from addresses, not from files.
@@ -167,52 +167,52 @@ At this point, you should have a `flow.json` that looks like this:
 
 ```json
 {
-	"emulators": {
-		"default": {
-			"port": 3569,
-			"serviceAccount": "emulator-account"
-		}
-	},
-	"contracts": {
-		"Domains": "./cadence/contracts/Domains.cdc",
-		"FlowToken": {
-			"source": "./cadence/contracts/tokens/FlowToken.cdc",
-			"aliases": {
-				"emulator": "0x0ae53cb6e3f42a79",
-				"testnet": "0x7e60df042a9c0868"
-			}
-		},
-		"FungibleToken": {
-			"source": "./cadence/contracts/interfaces/FungibleToken.cdc",
-			"aliases": {
-				"emulator": "0xee82856bf20e2aa6",
-				"testnet": "0x9a0766d93b6608b7"
-			}
-		},
-		"NonFungibleToken": {
-			"source": "./cadence/contracts/interfaces/NonFungibleToken.cdc",
-			"aliases": {
-				"emulator": "0xf8d6e0586b0a20c7",
-				"testnet": "0x631e88ae7f1d7c20"
-			}
-		}
-	},
-	"networks": {
-		"emulator": "127.0.0.1:3569",
-		"mainnet": "access.mainnet.nodes.onflow.org:9000",
-		"testnet": "access.devnet.nodes.onflow.org:9000"
-	},
-	"accounts": {
-		"emulator-account": {
-			"address": "f8d6e0586b0a20c7",
-			"key": "2619878f0e2ff438d17835c2a4561cb87b4d24d72d12ec34569acd0dd4af7c21"
-		},
-		"testnet": {
-			"address": "a47932041e18e39a",
-			"key": "e31fa3014f4d8400c93c25e1939f24f982b72fa9359433ff06126c40428c7548"
-		}
-	},
-	"deployments": {}
+  "emulators": {
+    "default": {
+      "port": 3569,
+      "serviceAccount": "emulator-account"
+    }
+  },
+  "contracts": {
+    "Domains": "./cadence/contracts/Domains.cdc",
+    "FlowToken": {
+      "source": "./cadence/contracts/tokens/FlowToken.cdc",
+      "aliases": {
+        "emulator": "0x0ae53cb6e3f42a79",
+        "testnet": "0x7e60df042a9c0868"
+      }
+    },
+    "FungibleToken": {
+      "source": "./cadence/contracts/interfaces/FungibleToken.cdc",
+      "aliases": {
+        "emulator": "0xee82856bf20e2aa6",
+        "testnet": "0x9a0766d93b6608b7"
+      }
+    },
+    "NonFungibleToken": {
+      "source": "./cadence/contracts/interfaces/NonFungibleToken.cdc",
+      "aliases": {
+        "emulator": "0xf8d6e0586b0a20c7",
+        "testnet": "0x631e88ae7f1d7c20"
+      }
+    }
+  },
+  "networks": {
+    "emulator": "127.0.0.1:3569",
+    "mainnet": "access.mainnet.nodes.onflow.org:9000",
+    "testnet": "access.devnet.nodes.onflow.org:9000"
+  },
+  "accounts": {
+    "emulator-account": {
+      "address": "f8d6e0586b0a20c7",
+      "key": "2619878f0e2ff438d17835c2a4561cb87b4d24d72d12ec34569acd0dd4af7c21"
+    },
+    "testnet": {
+      "address": "a47932041e18e39a",
+      "key": "e31fa3014f4d8400c93c25e1939f24f982b72fa9359433ff06126c40428c7548"
+    }
+  },
+  "deployments": {}
 }
 ```
 
@@ -237,58 +237,56 @@ Beautiful. Now, your `flow.json` should look like this:
 
 ```json
 {
-	"emulators": {
-		"default": {
-			"port": 3569,
-			"serviceAccount": "emulator-account"
-		}
-	},
-	"contracts": {
-		"Domains": "./cadence/contracts/Domains.cdc",
-		"FlowToken": {
-			"source": "./cadence/contracts/tokens/FlowToken.cdc",
-			"aliases": {
-				"emulator": "0x0ae53cb6e3f42a79",
-				"testnet": "0x7e60df042a9c0868"
-			}
-		},
-		"FungibleToken": {
-			"source": "./cadence/contracts/interfaces/FungibleToken.cdc",
-			"aliases": {
-				"emulator": "0xee82856bf20e2aa6",
-				"testnet": "0x9a0766d93b6608b7"
-			}
-		},
-		"NonFungibleToken": {
-			"source": "./cadence/contracts/interfaces/NonFungibleToken.cdc",
-			"aliases": {
-				"emulator": "0xf8d6e0586b0a20c7",
-				"testnet": "0x631e88ae7f1d7c20"
-			}
-		}
-	},
-	"networks": {
-		"emulator": "127.0.0.1:3569",
-		"mainnet": "access.mainnet.nodes.onflow.org:9000",
-		"testnet": "access.devnet.nodes.onflow.org:9000"
-	},
-	"accounts": {
-		"emulator-account": {
-			"address": "f8d6e0586b0a20c7",
-			"key": "2619878f0e2ff438d17835c2a4561cb87b4d24d72d12ec34569acd0dd4af7c21"
-		},
-		"testnet": {
-			"address": "a47932041e18e39a",
-			"key": "e31fa3014f4d8400c93c25e1939f24f982b72fa9359433ff06126c40428c7548"
-		}
-	},
-	"deployments": {
-		"testnet": {
-			"testnet": [
-				"Domains"
-			]
-		}
-	}
+  "emulators": {
+    "default": {
+      "port": 3569,
+      "serviceAccount": "emulator-account"
+    }
+  },
+  "contracts": {
+    "Domains": "./cadence/contracts/Domains.cdc",
+    "FlowToken": {
+      "source": "./cadence/contracts/tokens/FlowToken.cdc",
+      "aliases": {
+        "emulator": "0x0ae53cb6e3f42a79",
+        "testnet": "0x7e60df042a9c0868"
+      }
+    },
+    "FungibleToken": {
+      "source": "./cadence/contracts/interfaces/FungibleToken.cdc",
+      "aliases": {
+        "emulator": "0xee82856bf20e2aa6",
+        "testnet": "0x9a0766d93b6608b7"
+      }
+    },
+    "NonFungibleToken": {
+      "source": "./cadence/contracts/interfaces/NonFungibleToken.cdc",
+      "aliases": {
+        "emulator": "0xf8d6e0586b0a20c7",
+        "testnet": "0x631e88ae7f1d7c20"
+      }
+    }
+  },
+  "networks": {
+    "emulator": "127.0.0.1:3569",
+    "mainnet": "access.mainnet.nodes.onflow.org:9000",
+    "testnet": "access.devnet.nodes.onflow.org:9000"
+  },
+  "accounts": {
+    "emulator-account": {
+      "address": "f8d6e0586b0a20c7",
+      "key": "2619878f0e2ff438d17835c2a4561cb87b4d24d72d12ec34569acd0dd4af7c21"
+    },
+    "testnet": {
+      "address": "a47932041e18e39a",
+      "key": "e31fa3014f4d8400c93c25e1939f24f982b72fa9359433ff06126c40428c7548"
+    }
+  },
+  "deployments": {
+    "testnet": {
+      "testnet": ["Domains"]
+    }
+  }
 }
 ```
 
@@ -309,7 +307,7 @@ You should receive output as such:
 ```
 Deploying 1 contracts for accounts: testnet
 
-Domains -> 0xa47932041e18e39a (1ae58118f34c0f4c9cd32f82d28332d709d306884150b8da1593f6f3ba048be0) 
+Domains -> 0xa47932041e18e39a (1ae58118f34c0f4c9cd32f82d28332d709d306884150b8da1593f6f3ba048be0)
 
 
 ✨ All contracts deployed successfully
@@ -320,17 +318,18 @@ If you see this, congratulations, you have successfully deployed your contract!
 You don't need to worry about storing this contract address, because you can always come back to it and see the address of the `testnet` account in your `flow.json` file! Another reminder that contracts on Flow are deployed to pre-existing accounts, and don't get their own address. A Flow account can hold multiple smart contracts that do different things.
 
 ## 💰 Set Prices
+
 As the admin of the Registrar, you need to set the prices for the domains. Nobody will be able to purchase a domain if a price is not set. Therefore, before proceeding, we will utilize the Flow CLI and make a transaction to update prices in the Registrar so our website is actually useable.
 
 Create a file named `setTestPrices.cdc` under `flow-name-service/cadence/transactions` and add the following code to it:
 
-```rust
+```javascript
 import Domains from "../contracts/Domains.cdc"
 
 transaction() {
     let registrar: &Domains.Registrar
     prepare(account: AuthAccount) {
-        self.registrar = account.borrow<&Domains.Registrar>(from: Domains.RegistrarStoragePath) 
+        self.registrar = account.borrow<&Domains.Registrar>(from: Domains.RegistrarStoragePath)
             ?? panic("Could not borrow Registrar")
     }
 

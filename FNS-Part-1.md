@@ -167,7 +167,7 @@ I'm sure all of this seems a little overwhelming to look at right away. Spend so
 
 Create a file within `flow-nft-marketplace/cadence/contracts` and name it `Domains.cdc`. This is where we will write the code for our NFT Collection.
 
-```rust
+```javascript
 import NonFungibleToken from "./interfaces/NonFungibleToken.cdc"
 import FungibleToken from "./interfaces/FungibleToken.cdc"
 import FlowToken from "./tokens/FlowToken.cdc"
@@ -195,7 +195,7 @@ Let's create a simple struct called `DomainInfo` that contains all the data pert
 
 Add the following code to your smart contract:
 
-```rust
+```javascript
 // Struct that represents information about an FNS domain
 pub struct DomainInfo {
     // Public Variables of the Struct
@@ -252,7 +252,7 @@ We will use this feature to define separate resource interfaces for the Public a
 
 Add the following code for the `DomainPublic` resource interface (Public portion of the NFT) to your code:
 
-```rust
+```javascript
 pub resource interface DomainPublic {
     pub let id: UInt64
     pub let name: String
@@ -272,7 +272,7 @@ The definitions themselves are quite self explanatory, these are all the variabl
 
 Now for the private part, add the following code for the `DomainPrivate` resource interface (Private portion of the NFT) to your code:
 
-```rust
+```javascript
 pub resource interface DomainPrivate {
     pub fun setBio(bio: String)
     pub fun setAddress(addr: Address)
@@ -289,7 +289,7 @@ Now for the main part, the actual `NFT` resource itself. This is going to be lon
 
 Start by defining the resource itself, and add the following code:
 
-```rust
+```javascript
 pub resource NFT: DomainPublic, DomainPrivate, NonFungibleToken.INFT {
     // Rest of the code under this subheading goes here
 }
@@ -299,7 +299,7 @@ Note how we are using a similar syntax as the contract definition. We are implem
 
 Let's first define the variables, and a simple initializer. Add the following code within your `NFT` resource.
 
-```rust
+```javascript
 pub let id: UInt64
 pub let name: String
 pub let nameHash: String
@@ -327,7 +327,7 @@ Now, let's define the functions that the resource interfaces expect. We need to 
 
 Let's do the simple ones first:
 
-```rust
+```javascript
 pub fun getBio(): String {
     return self.bio
 }
@@ -354,7 +354,7 @@ You must be thinking why didn't we just add those two properties directly into t
 
 **So, let's zoom out a bit,** and step outside the NFT resource for a second. Go back to the top-level of your code, and add a couple of global variables.
 
-```rust
+```javascript
 pub let owners: {String: Address}
 pub let expirationTimes: {String: UFix64}
 ```
@@ -363,14 +363,14 @@ We will use this dictionaries (mappings) to store information about all domain o
 
 Also, let's add a couple of events to the contract we will emit as certain things happen.
 
-```rust
+```javascript
 pub event DomainBioChanged(nameHash: String, bio: String)
 pub event DomainAddressChanged(nameHash: String, address: Address)
 ```
 
 While we are here, let's also add a few helper functions to our smart contract (again at the global level).
 
-```rust
+```javascript
 // Checks if a domain is available for sale
 pub fun isAvailable(nameHash: String): Bool {
     if self.owners[nameHash] == nil {
@@ -425,7 +425,7 @@ On Flow, smart contracts are deployed to regular accounts on the network. So you
 
 Now, let's head back to our NFT resource, and fill in the missing pieces. Add the following functions **inside** the `NFT` resource.
 
-```rust
+```javascript
 pub fun setBio(bio: String) {
     // This is like a `require` statement in Solidity
     // A 'pre'-check to running this function
@@ -466,7 +466,7 @@ This code should be mostly self-explanatory, so we will move on. Having added th
 
 By this point, your NFT resource should overall look something like this:
 
-```rust
+```javascript
 pub resource NFT: DomainPublic, DomainPrivate, NonFungibleToken.INFT {
     pub let id: UInt64
     pub let name: String
@@ -541,7 +541,7 @@ Make sure you are no longer writing code inside the `NFT` resource, and have ste
 
 Define the following `CollectionPublic` resource interface:
 
-```rust
+```javascript
 pub resource interface CollectionPublic {
     pub fun borrowDomain(id: UInt64): &{Domains.DomainPublic}
 }
@@ -552,7 +552,7 @@ This interface only defines one function, `borrowDomain`. Remember the concept o
 We will enable third-parties to inspect someone's NFT Collection, and borrow a reference to a given NFT within the Collection. However, we will only let them borrow a reference to the `DomainPublic` interface so they don't have access to functions present within `DomainPrivate`.
 
 Now, define the following `CollectionPrivate` resource interface:
-```rust
+```javascript
 pub resource interface CollectionPrivate {
     access(account) fun mintDomain(name: String, nameHash: String, expiresAt: UFix64, receiver: Capability<&{NonFungibleToken.Receiver}>)
     pub fun borrowDomainPrivate(id: UInt64): &Domains.NFT
@@ -571,14 +571,14 @@ Now let's start working on writing code for the actual `Collection` resource. In
 
 We'll need to add a few events that are required by the `NonFungibleToken` standard before we proceed. Add the following events to your smart contract:
 
-```rust
+```javascript
 pub event Withdraw(id: UInt64, from: Address?)
 pub event Deposit(id: UInt64, to: Address?)
 ```
 
 Create the resource block as follows:
 
-```rust
+```javascript
 pub resource Collection: CollectionPublic, CollectionPrivate, NonFungibleToken.Provider, NonFungibleToken.Receiver, NonFungibleToken.CollectionPublic {
     // We will write rest of the code under this subheading here
 }
@@ -588,7 +588,7 @@ The three interfaces coming from `NonFungibleToken` - `Provider`, `Receiver`, an
 
 Let's create a public variable to store references to the `NFT` resources that belong to this Collection, and create a simple initializer. Add the following code within the `Collection` resource block:
 
-```rust
+```javascript
 // Dictionary (mapping) of Token ID -> NFT Resource 
 pub var ownedNFTs: @{UInt64: NonFungibleToken.NFT}
 
@@ -600,7 +600,7 @@ init() {
 
 Now, let's create the functions required by each interface. Starting with `NonFungibleToken.Provider`
 
-```rust
+```javascript
 // NonFungibleToken.Provider
 pub fun withdraw(withdrawID: UInt64): @NonFungibleToken.NFT {
     let domain <- self.ownedNFTs.remove(key: withdrawID)
@@ -618,7 +618,7 @@ You have to think of this as a user interacting with their personal NFT collecti
 
 Now, time for the `deposit` function required by `NonFungibleToken.Receiver`
 
-```rust
+```javascript
 // NonFungibleToken.Receiver
 pub fun deposit(token: @NonFungibleToken.NFT) {
     // Typecast the generic NFT resource as a Domains.NFT resource
@@ -644,7 +644,7 @@ The mental model for this function is that a third-party is calling the `deposit
 We typecast the provided resource as a `Domains.NFT` resource to get access to it's `id` and `nameHash` properties. Then we check it hasn't expired yet, because if it has, we shouldn't let it be transfered. We then update the owner of the NFT.
 
 The interesting part is this line:
-```rust
+```javascript
 let oldToken <- self.ownedNFTs[id] <- domain
 ```
 
@@ -660,7 +660,7 @@ So, we first move the existing resource (likely `nil`) out of the dictionary, an
 
 Amazing, now let's do the two functions required by `NonFungibleToken.CollectionPublic`. These are both quite simple.
 
-```rust
+```javascript
 // NonFungibleToken.CollectionPublic
 pub fun getIDs(): [UInt64] {
     // Ah, the joy of being able to return keys which are set
@@ -681,7 +681,7 @@ pub fun borrowNFT(id: UInt64): &NonFungibleToken.NFT {
 
 Now, for the good shit, time to implement the two interfaces we defined. Let's start off with `Domains.CollectionPublic`.
 
-```rust
+```javascript
 // Domains.CollectionPublic
 pub fun borrowDomain(id: UInt64): &{Domains.DomainPublic} {
     pre {
@@ -703,7 +703,7 @@ Finally, time for `Domains.CollectionPrivate`
 
 We will need to define an event and a couple more global variables before we do this. Zoom out a bit, and go to the top of your smart contract. Add the following two variables there, and an event:
 
-```rust
+```javascript
 // A mapping for domain nameHash -> domain ID
 pub let nameHashToIDs: {String: UInt64}
 // A counter to keep track of how many domains have been minted
@@ -714,7 +714,7 @@ pub event DomainMinted(id: UInt64, name: String, nameHash: String, expiresAt: UF
 
 Also, define a couple helper functions on the global level as well:
 
-```rust
+```javascript
 pub fun getAllNameHashToIDs(): {String: UInt64} {
     return self.nameHashToIDs
 }
@@ -728,7 +728,7 @@ These are both very similar to what we had done before.
 
 Now, back to the `Collection` resource. Define the following function within the resource.
 
-```rust
+```javascript
 // Domains.CollectionPrivate
 access(account) fun mintDomain(name: String, nameHash: String, expiresAt: UFix64, receiver: Capability<&{NonFungibleToken.Receiver}) {
     pre {
@@ -791,7 +791,7 @@ We will use this a lot as we build our frontend, to gain access to the public po
 
 Now, going back to the `mintDomain` function. Let's see what this last line is doing.
 
-```rust
+```javascript
 receiver.borrow()!.deposit(token: <- domain)
 ```
 
@@ -819,7 +819,7 @@ We did not have to do this for the `NFT` resource because the `NFT` resource con
 
 Add the following code to the `Collection` resource, and then we are done with this:
 
-```rust
+```javascript
 destroy() {
     destroy self.ownedNFTs
 }
@@ -839,7 +839,7 @@ Again, coming from Solidity, I understand some of this may seem overwhelming. Yo
 
 At this point, your overall `Collection` resource should look something like this:
 
-```rust
+```javascript
 pub resource Collection: CollectionPublic, CollectionPrivate, NonFungibleToken.Provider, NonFungibleToken.Receiver, NonFungibleToken.CollectionPublic {
     pub var ownedNFTs: @{UInt64: NonFungibleToken.NFT}
 
@@ -937,7 +937,7 @@ Make sure you are no longer writing code inside the `Collection` resource, it's 
 
 Add the following variables and events to your contract:
 
-```rust
+```javascript
 // Defines forbidden characters within domain names - such as .
 pub let forbiddenChars: String
 // Defines the minimum duration a domain must be rented for
@@ -953,7 +953,7 @@ pub event DomainRenewed(id: UInt64, name: String, nameHash: String, expiresAt: U
 
 As usual, we will split the Registrar into Public and Private portions. Let's define the two resource interfaces, starting with `RegistrarPublic`
 
-```rust
+```javascript
 pub resource interface RegistrarPublic {
     pub let minRentDuration: UFix64
     pub let maxDomainLength: Int
@@ -972,7 +972,7 @@ A new variable we have defined here is `prices`. `prices` will be a mapping whic
 
 Now, let's define `RegistrarPrivate`.
 
-```rust
+```javascript
 pub resource interface RegistrarPrivate {
     pub fun updateRentVault(vault: @FungibleToken.Vault)
     pub fun withdrawVault(receiver: Capability<&{FungibleToken.Receiver}>, amount: UFix64)
@@ -1010,7 +1010,7 @@ Let's build out the `Registrar` resource, and we will almost be done!
 
 Start by defining the resource block as always:
 
-```rust
+```javascript
 pub resource Registrar: RegistrarPublic, RegistrarPrivate {
     // All other code under this subheading goes here
 }
@@ -1018,7 +1018,7 @@ pub resource Registrar: RegistrarPublic, RegistrarPrivate {
 
 Let's define the variables this resource will contain, and the initializer.
 
-```rust
+```javascript
 // Variables defined in the interfaces
 pub let minRentDuration: UFix64
 pub let maxDomainLength: Int
@@ -1052,7 +1052,7 @@ Now, time to implement the requisite functions. Let's start off with `RegistrarP
 
 First, `renewDomain`
 
-```rust
+```javascript
 pub fun renewDomain(domain: &Domains.NFT, duration: UFix64, feeTokens: @FungibleToken.Vault) {
   // We don't need to check if the user owns this domain
   // because they are providing us a full reference to Domains.NFT
@@ -1109,7 +1109,7 @@ The comments in the code should sufficiently describe what is going on. While th
 
 Let's move on to `registerDomain`.
 
-```rust
+```javascript
 pub fun registerDomain(name: String, duration: UFix64, feeTokens: @FungibleToken.Vault, receiver: Capability<&{NonFungibleToken.Receiver}>) {
   // Ensure the domain name is not longer than the max length allowed
   pre {
@@ -1170,7 +1170,7 @@ Before moving on, let's implement the `Domains.getDomainNameHash` function that 
 
 **Zoom out** a bit, and add the following helper function to your smart contract **outside** the `Registrar` resource on the global level.
 
-```rust
+```javascript
 pub fun getDomainNameHash(name: String): String {
     // Make sure the domain name doesn't have any illegal characters
     let forbiddenCharsUTF8 = self.forbiddenChars.utf8
@@ -1192,7 +1192,7 @@ Now, back to the `Registrar` resource.
 
 Let's move on to the other simpler functions, I'll do them all in one go as they're much simpler than `renewDomain` or `registerDomain`
 
-```rust
+```javascript
 // Return the prices dictionary
 pub fun getPrices(): {Int: UFix64} {
       return self.prices
@@ -1230,7 +1230,7 @@ pub fun setPrices(key: Int, val: UFix64) {
 
 Great! Now, finally, since the `Registrar` resource contains other resources within it - specifically the `FungibleToken.Vault` - we have to create a destructor to destroy the vault if the Registrar is destroyed.
 
-```rust
+```javascript
 destroy() {
     destroy self.rentVault
 }
@@ -1255,7 +1255,7 @@ Since the `Domains.Collection` resource will be used both by the admin account a
 
 Define a global public function for this as follows:
 
-```rust
+```javascript
 pub fun createEmptyCollection(): @NonFungibleToken.Collection {
     let collection <- create Collection()
     return <- collection
@@ -1267,7 +1267,7 @@ Super simple, it just creates a new resource and returns it to the caller. They 
 #### getRentCost
 Add the following public helper function so users can predict the cost of the domain they want to purchase so they know how much funds to send along with the `registerDomain` transaction.
 
-```rust
+```javascript
 pub fun getRentCost(name: String, duration: UFix64): UFix64 {
     var len = name.length
     if len > 10 {
@@ -1287,7 +1287,7 @@ pub fun getRentCost(name: String, duration: UFix64): UFix64 {
 
 This is where a lot of the magic happens, so understand this carefully. Add the following variable declarations and one event to the global smart contract, first of all, which we will set in the Initializer and will be very helpful moving forward.
 
-```rust
+```javascript
 // Storage, Public, and Private paths for Domains.Collection resource
 pub let DomainsStoragePath: StoragePath
 pub let DomainsPrivatePath: PrivatePath
@@ -1305,7 +1305,7 @@ pub event ContractInitialized()
 
 Now, add the following Initializer, and make sure to read the comments in the code to understand what is going on.
 
-```rust
+```javascript
 init() {
     // Initial values for dictionaries is an empty dictionary
     self.owners = {}
@@ -1387,7 +1387,7 @@ This function will need to borrow those capabilities in order to call the `getVa
 
 Add the following helper function to your smart contract:
 
-```rust
+```javascript
 pub fun getVaultBalance(): UFix64 {
     let cap = self.account.getCapability<&Domains.Registrar{Domains.RegistrarPublic}>(Domains.RegistrarPublicPath)
     let registrar = cap.borrow() ?? panic("Could not borrow registrar public")
@@ -1403,7 +1403,7 @@ This will work pretty much similarly to `getVaultBalance`, where we get access t
 
 Since these capabilities are public, we could have chosen not to define these functions in our contract at all, and let the users borrow those capabilities and call those functions directly as part of their transaction - but this is just to make the user-sided work (website-side work, really) a little easier for us.
 
-```rust
+```javascript
 pub fun registerDomain(name: String, duration: UFix64, feeTokens: @FungibleToken.Vault, receiver: Capability<&{NonFungibleToken.Receiver}>) {
     let cap = self.account.getCapability<&Domains.Registrar{Domains.RegistrarPublic}>(self.RegistrarPublicPath)
     let registrar = cap.borrow() ?? panic("Could not borrow registrar")
@@ -1415,7 +1415,7 @@ pub fun registerDomain(name: String, duration: UFix64, feeTokens: @FungibleToken
 
 Very similar to the above two:
 
-```rust
+```javascript
 pub fun renewDomain(domain: &Domains.NFT, duration: UFix64, feeTokens: @FungibleToken.Vault) {
     let cap = self.account.getCapability<&Domains.Registrar{Domains.RegistrarPublic}>(self.RegistrarPublicPath)
     let registrar = cap.borrow() ?? panic("Could not borrow registrar")
@@ -1433,7 +1433,7 @@ I have said this multiple times throughout the level, but I will say it again. L
 
 Overall, just for reference, here is what your final smart contract code should look like:
 
-```rust
+```javascript
 import FungibleToken from "./interfaces/FungibleToken.cdc"
 import NonFungibleToken from "./interfaces/NonFungibleToken.cdc"
 import FlowToken from "./tokens/FlowToken.cdc"
