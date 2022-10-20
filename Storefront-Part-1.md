@@ -22,7 +22,7 @@ Recently, however, OpenSea did release SeaPort - a new set of smart contracts wh
 
 ## ⁉️ NFT Storefront
 
-The Flow team realised this was going to a problem a long time ago, and created a general purpose `NFTStorefront` contract that offers a shared Cadence smart contract interface that various marketplace products can all use and end up with a unified view of listings, activity, trading, etc. across all of them.
+The Flow team realised this was going to be a problem a long time ago, and created a general purpose `NFTStorefront` contract that offers a shared Cadence smart contract interface that various marketplace products can all use and end up with a unified view of listings, activity, trading, etc. across all of them.
 
 This was upgraded afterwards with `NFTStorefrontV2` which utilized some new features built into the Cadence language, and improved upon the old offerings.
 
