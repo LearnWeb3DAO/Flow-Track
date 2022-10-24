@@ -149,7 +149,7 @@ flow config add contract
 We'll start off with `NonFungibleToken`.
 
 1. Enter `NonFungibleToken` for the Name (case-sensitive)
-2. Enter `./cadence/contracts/interfaces/NonFungibleToken.cdc` for the Contract File Location (this path is relative to the location of `flow.json`)
+2. Enter `./cadence/contracts/interfaces/NonFungibleToken.cdc` for the Contract File Location (this path is relative to the location of `flow.json`). For Windows users, the cos in contracts will cause an issue so to get around copy `./cadence/ontracts/interfaces/NonFungibleToken.cdc` and then type the missing `c` to complete the path.
 3. Press enter (leave blank) the emulator alias for this contract
 4. For the Testnet alias, enter `0x631e88ae7f1d7c20` (fetched from the Core Contracts link above)
 
