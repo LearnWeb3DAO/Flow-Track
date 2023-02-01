@@ -8,7 +8,7 @@ Flow solves this problem.
 
 Flow allows you to push a *"beta smart contract"* to their main network. You will be able to make changes to your beta contract while it's still in beta phase. This is very helpful during development as it allows the developers to rectify mistakes and bugs. Writing perfect code the first time around is exceptionally rare.
 
-Once you decide to finalize the contract, you can choose take it out of beta phase. This will make your smart contract immutable (unchangeable).
+Once you decide to finalize the contract, you can choose to take it out of beta phase. This will make your smart contract immutable (unchangeable).
 
 ![](https://i.imgur.com/2Xim6eR.png)
 
@@ -88,7 +88,7 @@ The *exact* amount of storage you have is your FLOW tokens multiplied by the **s
 
 ## Segmented Transaction Fees
 
-Flow has transaction fees. Just like with Ethereum, transaction fees are necessary in-order to maintain the *security* of the Flow network. By requiring a fee for every computation executed on the network, bad actors are prevented from spamming the network.
+Flow has transaction fees. Just like with Ethereum, transaction fees are necessary in order to maintain the *security* of the Flow network. By requiring a fee for every computation executed on the network, bad actors are prevented from spamming the network.
 
 For example, if a bad actor wanted to spam the network, gas fees would make it financially infeasible.
 
