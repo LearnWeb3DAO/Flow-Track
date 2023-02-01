@@ -45,7 +45,7 @@ This will setup a basic Flow project for us where we will write our code, inside
 
 We will use NFTs to represent every domain name on the name service. For this, we will use Flow's NFT Standard - `NonFungible`. For the most part, it is quite similar to ERC-721 on Ethereum, but of course has some differences specific to Cadence and uses Resources to represent individual NFTs and NFT Collections. The documentation for the NFT Standard can be found [here](https://github.com/onflow/flow-nft).
 
-Users will be able to purchase a new domain name by minting a new NFT, which can then be traded on a marketplace as well. This NFT will contain information that associates the user's crypto address to the domain name as part of it's metadata.
+Users will be able to purchase a new domain name by minting a new NFT, which can then be traded on a marketplace as well. This NFT will contain information that associates the user's crypto address to the domain name as part of its metadata.
 
 ## 🪵 Using the Standards
 
@@ -61,7 +61,7 @@ This file defines all the functions, resources, events, etc that are required fo
 
 ---
 
-Additionally, since the NFT domain names are going to be purchased using the Flow Token, we will also need it's required standards. Unlike Ethereum, the Flow token itself follows the same `FungibleToken` standard as all other tokens built on Flow. This is again quite similar to `ERC-20` on Ethereum, except, of course, has Cadence and Flow specific things we will understand.
+Additionally, since the NFT domain names are going to be purchased using the Flow Token, we will also need its required standards. Unlike Ethereum, the Flow token itself follows the same `FungibleToken` standard as all other tokens built on Flow. This is again quite similar to `ERC-20` on Ethereum, except, of course, has Cadence and Flow specific things we will understand.
 
 Create a file named `FungibleToken.cdc` within `flow-name-service/cadence/contracts/interfaces`, and copy over the Fungible Token standard interface into that file from [FungibleToken.cdc](https://github.com/onflow/flow-ft/blob/master/contracts/FungibleToken.cdc)
 
@@ -95,7 +95,7 @@ Since Cadence is all based around the concept of Resources, let's think about ho
 
 ## 💎 Everything as a Resource
 
-This part is likely going to be one of the trickiest parts to properly understand in this level. Make sure to spend some time here and have a decent understand before proceeding, also never hestitate to ask questions on the Discord if you don't understand something.
+This part is likely going to be one of the trickiest parts to properly understand in this level. Make sure to spend some time here and have a decent understand before proceeding, also never hesitate to ask questions on the Discord if you don't understand something.
 
 Coming from Solidity, we are used to all Smart Contract related data being stored in the smart contract itself. As we have alluded to multiple times at this point, data on Flow is usually stored directly with the user itself - in the user's account storage. Therefore, we have to think about Resources very carefully. Cadence makes it really hard to write bad code, but that also means it has a learning curve when just starting out. I will try my best to explain it the best I can.
 
@@ -138,7 +138,7 @@ As such, for our `Domains` contract, every user who purchases one (or more) FNS 
 
 Quite similar to the `NFT` resource, the `Collection` resource is also split into Public and Private portions. If we think about it in terms of data being stored in a user's account, the user's account will never store `NFT` data directly. Rather, it will store a `Collection` resource which inside it contains one (or more) `NFT` resources.
 
-As such, to access information about a specific NFT, a third-party must first reference the Public portion of the Collection, load a specific NFT from within that collection, and then use the Public portion of the NFT resource to get it's information.
+As such, to access information about a specific NFT, a third-party must first reference the Public portion of the Collection, load a specific NFT from within that collection, and then use the Public portion of the NFT resource to get its information.
 
 Therefore, the Public portion of the Collection implements functions that let third-party users look at Public portions of the NFTs contained within the collection.
 
@@ -344,7 +344,7 @@ pub fun getDomainName(): String {
 So far so good, pretty basic. But here we have hit two roadblocks.
 
 1. For the `getInfo()` function that will return a `DomainInfo` struct, we don't currently have a way to fetch the `owner` of a given NFT. We also do not have a way to get the `expiresAt` property.
-2. For the `setBio()` and `setAddress()` function, we must ensure that the domain has not crossed it's expiry date, in which case the owner should not be allowed to modify anything.
+2. For the `setBio()` and `setAddress()` function, we must ensure that the domain has not crossed its expiry date, in which case the owner should not be allowed to modify anything.
 
 You must be thinking why didn't we just add those two properties directly into the `NFT` resource. Well, a couple of reasons.
 1. We want to have global track of the owners of all domains, and the expiry dates of all domains, in existence, and tying them to the NFT resource means we will have to fetch it from the account storage of potentially a lot of different accounts.
@@ -359,7 +359,7 @@ pub let owners: {String: Address}
 pub let expirationTimes: {String: UFix64}
 ```
 
-We will use this dictionaries (mappings) to store information about all domain owners and the expiry times. The key (String) will be the domain's `nameHash`, and the values will represent the owner address and expiry time respectively.
+We will use these dictionaries (mappings) to store information about all domain owners and the expiry times. The key (String) will be the domain's `nameHash`, and the values will represent the owner address and expiry time respectively.
 
 Also, let's add a couple of events to the contract we will emit as certain things happen.
 
@@ -559,7 +559,7 @@ pub resource interface CollectionPrivate {
   }
 ```
 
-Let's first look at `borrowDomainPrivate`. This is pretty similar to `borrowDomain` as in the public collection, except it returns a reference to the *full* NFT i.e. both it's public and private parts. This is expected to be used by the owner of the NFT to borrow a reference to the NFT's private functions, to update the `bio` and `address` attached to the NFT.
+Let's first look at `borrowDomainPrivate`. This is pretty similar to `borrowDomain` as in the public collection, except it returns a reference to the *full* NFT i.e. both its public and private parts. This is expected to be used by the owner of the NFT to borrow a reference to the NFT's private functions, to update the `bio` and `address` attached to the NFT.
 
 The more interesting one here is `mintDomain`. It's an `access(account)` function. Which means, even though it's part of `CollectionPrivate`, it can only be used by the account of the smart contract, which essentially makes it an admin/owner function.
 
@@ -584,7 +584,7 @@ pub resource Collection: CollectionPublic, CollectionPrivate, NonFungibleToken.P
 }
 ```
 
-The three interfaces coming from `NonFungibleToken` - `Provider`, `Receiver`, and `CollectionPublic` define functions like `deposit`, `withdraw`, `borrowNFT`, and `getIDs`. I will explain waht each of them do as we write them.
+The three interfaces coming from `NonFungibleToken` - `Provider`, `Receiver`, and `CollectionPublic` define functions like `deposit`, `withdraw`, `borrowNFT`, and `getIDs`. I will explain what each of them do as we write them.
 
 Let's create a public variable to store references to the `NFT` resources that belong to this Collection, and create a simple initializer. Add the following code within the `Collection` resource block:
 
@@ -641,7 +641,7 @@ pub fun deposit(token: @NonFungibleToken.NFT) {
 
 The mental model for this function is that a third-party is calling the `deposit` function on a user's public NFT collection, thereby 'depositing' an NFT in that user's collection. To do so, they provide a `NonFungibleToken.NFT` resource, which in our case would be the `Domains.NFT` resource. They can do this by, for example, first calling `withdraw` on their own collection to get access to the NFT resource.
 
-We typecast the provided resource as a `Domains.NFT` resource to get access to it's `id` and `nameHash` properties. Then we check it hasn't expired yet, because if it has, we shouldn't let it be transfered. We then update the owner of the NFT.
+We typecast the provided resource as a `Domains.NFT` resource to get access to its `id` and `nameHash` properties. Then we check it hasn't expired yet, because if it has, we shouldn't let it be transferred. We then update the owner of the NFT.
 
 The interesting part is this line:
 ```javascript
@@ -695,7 +695,7 @@ pub fun borrowDomain(id: UInt64): &{Domains.DomainPublic} {
 
 This is again basically the same thing as `borrowNFT`, except it returns it typecasted to `DomainPublic` which exposes public functions we have defined on our Domain NFT. `borrowNFT` does not do this, as it only exposes the functions defined by the `NonFungibleToken.NFT` resource interface, which has no idea about our custom functions.
 
-Note: We added a `pre` check here to make sure the Domain NFT exists, but did not do this in `borrowNFT`. This is because if you look at the NFT standard contract, you will see that the `pre` check is already implemented there for us, whereas here we have to do it ourself.
+Note: We added a `pre` check here to make sure the Domain NFT exists, but did not do this in `borrowNFT`. This is because if you look at the NFT standard contract, you will see that the `pre` check is already implemented there for us, whereas here we have to do it ourselves.
 
 ---
 
@@ -980,7 +980,7 @@ pub resource interface RegistrarPrivate {
 }
 ```
 
-`setPrices` is again fairly straightfoward. Admin functions to update the prices. We will explain `updateRentVault` in more detail shortly, but note it's argument `vault: @FungibleToken.Vault` - it's our FIRST use of the `FungibleToken` standard we imported at the beginning of this lesson! `withdrawVault` does what it sounds like, moves the Flow tokens earned by the `Registrar` into a different account.
+`setPrices` is again fairly straightforward. Admin functions to update the prices. We will explain `updateRentVault` in more detail shortly, but note it's argument `vault: @FungibleToken.Vault` - it's our FIRST use of the `FungibleToken` standard we imported at the beginning of this lesson! `withdrawVault` does what it sounds like, moves the Flow tokens earned by the `Registrar` into a different account.
 
 Let's break for a quick lesson on `FungibleToken` Vaults.
 
@@ -1427,7 +1427,7 @@ pub fun renewDomain(domain: &Domains.NFT, duration: UFix64, feeTokens: @Fungible
 
 And now, FINALLY, with everything in place, we are DONE writing our smart contract.
 
-This level was **HUGE!** I am sure you learnt A LOT, and got a LOT more experience with Cadence and Flow's concepts through this level.
+This level was **HUGE!** I am sure you learned A LOT, and got a LOT more experience with Cadence and Flow's concepts through this level.
 
 I have said this multiple times throughout the level, but I will say it again. Learning a new language, especially one with so many new things (resources, capabilities) and building the mental models around it can take time, and it's okay. I don't expect you to become an expert in Cadence just by doing this one level, but hopefully at least 50% of the things I said made sense to you. The other 50%, **ask me doubts on Discord**, go through the level again, read the code you have written, and it will eventually come to you.
 
