@@ -35,7 +35,7 @@ In modern CPUs as well, pipelining is a common strategy to let your CPU perform 
 
 ---
 
-Let's take a look at an example to understand this concept better. Let's say there are four loads of laundry that need to be washed, dried, and folded. We could put the the first load in the washer for 30 minutes, dry it for 40 minutes, and then take 20 minutes to fold the clothes. Then pick up the second load and wash, dry, and fold, and repeat for the third and fourth loads. Supposing we started at 6 PM and worked as efficiently as possible, we would still be doing laundry until midnight.
+Let's take a look at an example to understand this concept better. Let's say there are four loads of laundry that need to be washed, dried, and folded. We could put the first load in the washer for 30 minutes, dry it for 40 minutes, and then take 20 minutes to fold the clothes. Then pick up the second load and wash, dry, and fold, and repeat for the third and fourth loads. Supposing we started at 6 PM and worked as efficiently as possible, we would still be doing laundry until midnight.
 
 ![](https://i.imgur.com/whBgVxk.png)
 Source: [Stanford CS Department](https://cs.stanford.edu/people/eroberts/courses/soco/projects/risc/pipelining/index.html)
