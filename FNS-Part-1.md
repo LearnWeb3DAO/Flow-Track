@@ -34,7 +34,7 @@ If you're using Visual Studio Code for development, I also highly recommend inst
 Run the following command in your terminal
 
 ```sh
-flow app create flow-name-service
+flow setup flow-name-service
 ```
 
 Choose `Template` and then `Basic` when it prompts you.
