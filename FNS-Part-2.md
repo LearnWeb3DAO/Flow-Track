@@ -8,7 +8,7 @@ Since Flow is relatively earlier stage, compared to more mature ecosystems like 
 
 ## 🌊 flow.json
 
-When you created your app initially in the last level using `flow app create flow-name-service` it set up a project structure for you to work off of.
+When you created your app initially in the last level using `flow setup flow-name-service` it set up a project structure for you to work off of.
 
 In the folder `flow-name-service`, the most important file we will be working with is `flow.json`. This is the configuration file for the Flow CLI, and defines the configuration for actions that the Flow CLI can perform for you.
 
