@@ -27,7 +27,9 @@ This is what we will be building by the end of this lesson series:
 
 ## 🔬 Setting Up
 
-Make sure you have installed the [Flow CLI](https://docs.onflow.org/flow-cli/install/) to proceed. We will use it to create our project that will house all our code.
+Make sure you have installed the [Flow CLI](https://developers.flow.com/tooling/flow-cli/install) to proceed. We will use it to create our project that will house all our code.
+
+> Note : Please follow the installation steps based on your operating system.
 
 If you're using Visual Studio Code for development, I also highly recommend installing the Cadence extension to make life easier for you. You can download it [here](https://marketplace.visualstudio.com/items?itemName=onflow.cadence).
 
