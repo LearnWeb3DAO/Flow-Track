@@ -39,7 +39,7 @@ Once your wallet is all set up, we need to get some testnet FLOW tokens.
 
 The Flow CLI is a command-line interface that provides useful utilities for building Flow applications. Think of it like Hardhat, but for Flow.
 
-Install the Flow CLI on your computer. Installation instructions vary based on operating system, so [follow the installation steps here](https://docs.onflow.org/flow-cli/install/) to get the up-to-date instructions.
+Install the Flow CLI on your computer. Installation instructions vary based on operating system, so [follow the installation steps here](https://developers.flow.com/tooling/flow-cli/install) to get the up-to-date instructions.
 
 We will use the CLI to create dApps moving forward for Flow.
 
